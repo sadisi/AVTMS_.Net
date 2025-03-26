@@ -18,5 +18,6 @@ namespace AVTMS.ViewModels
 
         [Required(ErrorMessage = "ConfirmPassword is required.")]
         public string ConfirmPassword { get; set; }
+       
     }
 }
