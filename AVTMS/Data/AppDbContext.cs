@@ -1,16 +1,18 @@
-﻿using AVTMS.Models;
+﻿
+using AVTMS.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AVTMS.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<Users>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
-        
+        public AppDbContext(DbContextOptions options) : base(options)
+
         {
-             
+
         }
 
-        public DbSet<Vehicle> Vehicles {  get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
     }
 }
