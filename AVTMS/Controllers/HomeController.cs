@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using AVTMS.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AVTMS.Controllers
@@ -18,6 +19,10 @@ namespace AVTMS.Controllers
             return View();
         }
 
+
+
+
+        [Authorize] // when loged in then show privacy page
         public IActionResult Privacy()
         {
             return View();
