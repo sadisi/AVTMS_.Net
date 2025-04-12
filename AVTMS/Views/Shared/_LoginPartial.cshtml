@@ -1,10 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @inject SignInManager<Users> signInManager;
+@inject UserManager<Users> userManager;
 
 
         <ul class="navbar-nav ms-auto">
             @if(signInManager.IsSignedIn(User))
             {
+
+                   var user = await userManager.GetUserAsync(User);
+                <li class="nav-item">
+                  <a class="nav-link text-dark" >@user.UserName</a>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a> 
                 </li>
