@@ -4,6 +4,7 @@ using AVTMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AVTMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250413125409_Add admin.cs model and ActivityUser.cs")]
+    partial class AddadmincsmodelandActivityUsercs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,140 +90,6 @@ namespace AVTMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Admins");
-                });
-
-            modelBuilder.Entity("AVTMS.Models.AuthUsers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedByID")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NIC")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("RegisteredDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("UserBranch")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("UserType")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuthUsers");
-                });
-
-            modelBuilder.Entity("AVTMS.Models.BaseUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedByID")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NIC")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("RegisteredDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("UserBranch")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("UserType")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BaseUser");
                 });
 
             modelBuilder.Entity("AVTMS.Models.Users", b =>

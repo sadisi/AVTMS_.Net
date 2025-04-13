@@ -4,6 +4,7 @@ using AVTMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AVTMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250413150401_Check errors")]
+    partial class Checkerrors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,12 +100,6 @@ namespace AVTMS.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CreatedByID")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -121,12 +118,6 @@ namespace AVTMS.Migrations
                     b.Property<string>("MiddleName")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("NIC")
                         .IsRequired()
