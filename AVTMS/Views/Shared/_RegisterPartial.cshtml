@@ -1,0 +1,61 @@
+﻿@model AVTMS.ViewModels.RegisterViewModel
+
+<div class="account-box">
+    <h2 class="text-center mb-4">Register</h2>
+    <form id="registerForm" asp-action="Register" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label"></label>
+            <div class="input-group">
+                <input asp-for="Password" class="form-control" type="password" id="passwordField" />
+                <span class="input-group-text">
+                    <i class="bi bi-eye-slash" id="togglePassword" style="cursor: pointer;"></i>
+                </span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ConfirmPassword" class="form-label"></label>
+            <div class="input-group">
+                <input asp-for="ConfirmPassword" class="form-control" type="password" id="confirmPasswordField" />
+                <span class="input-group-text">
+                    <i class="bi bi-eye-slash" id="toggleConfirmPassword" style="cursor: pointer;"></i>
+                </span>
+            </div>
+        </div>
+        <input type="submit" value="Register" class="btn btn-success w-100 p-2" />
+    </form>
+</div>
+
+@section Scripts{
+  @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+  }
+  
+    <script>
+        //Show Password icon
+        function togglePassword(fieldId, button) {
+            const input = document.getElementById(fieldId);
+            const icon = button.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+        }
+    </script>
+}

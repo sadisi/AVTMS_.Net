@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AVTMS.Data;
 using AVTMS.Models;
+using AVTMS.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace AVTMS.Controllers
 {
     public class BaseUsersController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<Users> _userManager;
 
-        public BaseUsersController(AppDbContext context)
+        public BaseUsersController(AppDbContext context, UserManager<Users> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: BaseUsers
@@ -161,5 +165,82 @@ namespace AVTMS.Controllers
         {
             return _context.BaseUser.Any(e => e.Id == id);
         }
+
+
+
+
+        //////////Aditional register button//////////////////
+        ///
+
+        public async Task<IActionResult> Register(int id)
+        {
+            // Retrieve the BaseUser record using the id
+            var baseUser = await _context.BaseUser.FindAsync(id);
+            if (baseUser == null)
+            {
+                return NotFound();
+            }
+
+            // Map the necessary data to  RegisterViewModel.
+            // For example, if you want to prefill the Name and Email fields:
+            var model = new RegisterViewModel
+            {
+                Name = baseUser.FirstName,  // or combine names as needed
+                Email = baseUser.Email,
+                Password = baseUser.Password,
+                ConfirmPassword = baseUser.Password // You can set a default password or leave it empty
+                // You may leave Password/ConfirmPassword empty or handle them as needed.
+            };
+
+            // Return a partial view that contains your registration form
+            return PartialView("_RegisterPartial", model);
+        }
+
+
+
+
+        // POST: Base USer/Register
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Create a new user instance without setting the PasswordHash directly.
+                var user = new Users
+                {
+                    FullName = model.Name,
+                    Email = model.Email,
+                    UserName = model.Email,
+                    NormalizedEmail = model.Email.ToUpper(),
+                    NormalizedUserName = model.Email.ToUpper(),
+                };
+
+                // Use UserManager to create the user; it will hash the password internally.
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    //message to user in frontend
+                    TempData["SuccessMessage"] = "User registered successfully!";
+                    // Optionally, sign the user in or perform other actions.
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    // Add any errors to the ModelState to be displayed in the view.
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+
+            // Return the partial view with validation errors, if any.
+            return PartialView("_RegisterPartial", model);
+        }
+
+
     }
 }
