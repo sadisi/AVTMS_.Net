@@ -26,7 +26,16 @@ namespace AVTMS.Controllers
         // GET: BaseUsers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.BaseUser.ToListAsync());
+            //  return View(await _context.BaseUser.ToListAsync());
+            var BaseUserList = await _context.BaseUser.ToListAsync();
+
+            foreach (var BUser in BaseUserList)
+            {
+                var identityUser = await _userManager.FindByEmailAsync(BUser.Email);
+                BUser.IsRegistered = identityUser != null;
+            }
+
+            return View(BaseUserList);
         }
 
         // GET: BaseUsers/Details/5
@@ -70,9 +79,13 @@ namespace AVTMS.Controllers
             {
                 _context.Add(baseUser);
                 await _context.SaveChangesAsync();
+                // Success message for frontend
+                TempData["SuccessMessage"] = "Base User Added successfully!";
                 return RedirectToAction(nameof(Index));
+
             }
             return View(baseUser);
+
         }
 
         // GET: BaseUsers/Edit/5
@@ -188,7 +201,8 @@ namespace AVTMS.Controllers
                 Name = baseUser.FirstName,  // or combine names as needed
                 Email = baseUser.Email,
                 Password = baseUser.Password,
-                ConfirmPassword = baseUser.Password // You can set a default password or leave it empty
+                ConfirmPassword = baseUser.Password,// You can set a default password or leave it empty
+                UserType = baseUser.UserType,
                 // You may leave Password/ConfirmPassword empty or handle them as needed.
             };
 
@@ -215,6 +229,7 @@ namespace AVTMS.Controllers
                     UserName = model.Email,
                     NormalizedEmail = model.Email.ToUpper(),
                     NormalizedUserName = model.Email.ToUpper(),
+                    UserType = model.UserType,
                 };
 
                 // Use UserManager to create the user; it will hash the password internally.
@@ -240,7 +255,43 @@ namespace AVTMS.Controllers
             // Return the partial view with validation errors, if any.
             return PartialView("_RegisterPartial", model);
         }
+        //Update User Directly
+        [HttpPost]
+        public async Task<IActionResult> SyncToRegisterModel(int id)
+        {
+            var baseUser = await _context.BaseUser.FindAsync(id);
+            if (baseUser == null)
+                return Json(new { success = false, message = "Base user not found." });
 
+            var identityUser = await _userManager.FindByEmailAsync(baseUser.Email);
+            if (identityUser == null)
+                return Json(new { success = false, message = "Identity user not found." });
+
+            // Update Identity fields
+            identityUser.UserName = baseUser.Email;
+            identityUser.Email = baseUser.Email;
+            identityUser.PhoneNumber = baseUser.PhoneNumber;
+            identityUser.PasswordHash = _userManager.PasswordHasher.HashPassword(identityUser, baseUser.Password);
+
+            // Cast to custom Identity model
+            if (identityUser is Users extendedUser)
+            {
+                extendedUser.FullName = baseUser.FirstName;
+                extendedUser.UserType = baseUser.UserType;
+                extendedUser.PasswordHash = _userManager.PasswordHasher.HashPassword(identityUser, baseUser.Password);
+            }
+
+            var result = await _userManager.UpdateAsync(identityUser);
+            if (result.Succeeded)
+            {
+                return Json(new { success = true, message = "Register model updated successfully!" });
+            }
+            else
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return Json(new { success = false, message = $"Update failed: {errors}" });
+            }
+        }
 
     }
 }

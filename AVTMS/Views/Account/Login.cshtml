@@ -24,8 +24,10 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div  class="float-end">
-                <a asp-controller="Account" asp-action="VerifyEmail" class="text-decoration-none">
-                    Forgot password ?
+                <!--<a asp-controller="Account" asp-action="VerifyEmail" class="text-decoration-none">
+                    Forgot password ?-->
+                <a asp-controller="Home" asp-action="Privacy" class="text-decoration-none">
+                   Terms and Conditions
                 </a>
             </div>
             <div class="form-check mb-3">
@@ -39,9 +41,7 @@
                 Don't have an account? <a asp-controller="Account" asp-action="Register" class="text-decoration-none">Register</a>
             </p>
 
-            <div class="text-center">
-                <a asp-controller="Home" asp-action="Index" class="text-decoration-none mt-3">Back</a>
-            </div>
+          
         </form>
 
     </div>

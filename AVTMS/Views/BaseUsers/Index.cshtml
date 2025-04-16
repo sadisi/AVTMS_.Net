@@ -20,6 +20,14 @@
         </div>
     </div>
 }
+<!--User Update Alert-->
+<div id="updateAlert" class="alert alert-dismissible fade show d-none" role="alert">
+    <strong id="alertTitle"></strong> <span id="alertMessage"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="$('#updateAlert').addClass('d-none')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 
 
 <h1>Base Users</h1>
@@ -111,7 +119,15 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                <a class="btn btn-link registerButton" data-id="@item.Id">Register</a>
+                    <!-- <a class="btn btn-link registerButton" data-id="@item.Id">Register</a>-->
+                    @if (item.IsRegistered)
+                    {
+                        <a class="btn btn-link  updateButton" data-id="@item.Id">Update</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-link registerButton" data-id="@item.Id">Register</a>
+                    }
             </td>
         </tr>
 }
@@ -139,44 +155,84 @@
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        $(document).ready(function () {
 
-        ////_RegisterPartial.cs Page load
-        $(document).ready(function(){
-            $('.registerButton').click(function(e){
+            // Load Register Partial View in Modal
+            $('.registerButton').click(function (e) {
                 e.preventDefault();
                 var id = $(this).data('id');
-                // Use AJAX to get the _RegisterPartial view
                 $.ajax({
                     url: '@Url.Action("Register", "BaseUsers")',
                     data: { id: id },
                     type: 'GET',
-                    success: function(result) {
-                        // Load the result into the modal body and show the modal
+                    success: function (result) {
                         $('#registerModalBody').html(result);
                         $('#registerModal').show();
                     },
-                    error: function(xhr, status, error){
-                        alert("An error occurred while loading the registration form.");
+                    error: function () {
+                        showAlert(false, "An error occurred while loading the registration form.");
                     }
                 });
             });
+
+            // Sync BaseUser to RegisterModel on Update Button Click
+            $('.updateButton').click(function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '@Url.Action("SyncToRegisterModel", "BaseUsers")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        showAlert(result.success, result.message);
+                        if (result.success) {
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                        }
+                    },
+                    error: function () {
+                        showAlert(false, "An error occurred while syncing data.");
+                    }
+                });
+            });
+
+            //When user added as a base user notiffication timeout
+             $(document).ready(function () {
+            // Auto hide the success alert after 5 seconds
+            if ($('#success-alert').length > 0) {
+                setTimeout(function () {
+                    $('#success-alert').fadeOut('slow', function () {
+                        $(this).addClass('d-none');
+                    });
+                }, 5000); // 5000ms = 5 seconds
+            }
         });
 
+            // Alert Display Function
+            function showAlert(success, message) {
+                let alertType = success ? 'alert-primary' : 'alert-danger';
+                let alertTitle = success ? '✅ Success!' : '⚠️ Error:';
 
+                $('#updateAlert')
+                    .removeClass('d-none alert-primary alert-danger')
+                    .addClass(alertType)
+                    .fadeIn();
 
-        // Automatically fade out user register successfull alert after 5 seconds
-        setTimeout(function () {
-            const alert = document.getElementById("success-alert");
-            if (alert) {
-                alert.style.transition = "opacity 0.5s ease-out";
-                alert.style.opacity = "0";
+                $('#alertTitle').text(alertTitle);
+                $('#alertMessage').text(" " + message);
 
-                setTimeout(() => {
-                    alert.remove(); // Fully remove from DOM
-                }, 500);
+                // Auto hide after 5 seconds
+                setTimeout(function () {
+                    $('#updateAlert').fadeOut(function () {
+                        $(this).addClass('d-none');
+                    });
+                }, 5000);
+
             }
-        }, 5000); // 5000 ms = 5 seconds
+
+        });
     </script>
-    <!-- You can add additional scripts for modal handling if needed -->
 }
+
 

@@ -15,8 +15,10 @@
         <tr>
             <th>Full Name</th>
             <th>Email</th>
+            <th>User Type</th>
             <th>User Name</th>
             <th>Password</th>
+           
 
         </tr>
     </thead>
@@ -26,6 +28,7 @@
             <tr>
                 <td>@user.FullName</td>
                 <td>@user.Email</td>
+                <td>@user.UserType</td>
                 <td>@user.UserName</td>
                 <td>@user.PasswordHash?.Substring(0, 10)...</td>
 

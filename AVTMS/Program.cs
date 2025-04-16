@@ -57,6 +57,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    //pattern: "{controller=Home}/{action=Index}/{id?}");
+    //when run the code Login apge open firstly
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

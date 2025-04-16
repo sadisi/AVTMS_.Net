@@ -18,6 +18,13 @@
         </div>
     </div>
 }
+<!--User Update Alert-->
+<div id="updateAlert" class="alert alert-dismissible fade show d-none" role="alert">
+    <strong id="alertTitle"></strong> <span id="alertMessage"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="$('#updateAlert').addClass('d-none')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
 
 <h1>Admin</h1>
@@ -113,7 +120,15 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                <a class="btn btn-link registerButton" data-id="@item.Id">Register</a>
+                    <!--<a class="btn btn-sm btn-primary updateButton" data-id="@item.Id">Update</a> -->
+                    @if (item.IsRegistered)
+                    {
+                        <a class="btn btn-link  updateButton" data-id="@item.Id">Update</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-link registerButton" data-id="@item.Id">Register</a>
+                    }
             </td>
         </tr>
 }
@@ -165,21 +180,51 @@
             });
         });
 
-        // Automatically fade out user register successfull alert after 5 seconds
-        setTimeout(function () {
-            const alert = document.getElementById("success-alert");
-            if (alert) {
-                alert.style.transition = "opacity 0.5s ease-out";
-                alert.style.opacity = "0";
 
-                setTimeout(() => {
-                    alert.remove(); // Fully remove from DOM
-                }, 500);
+         // Sync Admins to RegisterModel on Update Button Click
+            $('.updateButton').click(function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '@Url.Action("SyncToRegisterModel", "Admins")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        showAlert(result.success, result.message);
+                        if (result.success) {
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                        }
+                    },
+                    error: function () {
+                        showAlert(false, "An error occurred while syncing data.");
+                    }
+                });
+            });
+
+            // Alert Display Function
+            function showAlert(success, message) {
+                let alertType = success ? 'alert-primary' : 'alert-danger';
+                let alertTitle = success ? '✅ Success!' : '⚠️ Error:';
+
+                $('#updateAlert')
+                    .removeClass('d-none alert-primary alert-danger')
+                    .addClass(alertType)
+                    .fadeIn();
+
+                $('#alertTitle').text(alertTitle);
+                $('#alertMessage').text(" " + message);
+
+                // Auto hide after 5 seconds
+                setTimeout(function () {
+                    $('#updateAlert').fadeOut(function () {
+                        $(this).addClass('d-none');
+                    });
+                }, 5000);
             }
-        }, 5000); // 5000 ms = 5 seconds
 
-        
     </script>
-    <!-- You can add additional scripts for modal handling if needed -->
+    
 
 }

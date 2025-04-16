@@ -26,7 +26,16 @@ namespace AVTMS.Controllers
         // GET: Admins
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Admins.ToListAsync());
+            // --Default -- return View(await _context.Admins.ToListAsync());
+            var AdminsList = await _context.Admins.ToListAsync();
+
+            foreach (var Admin in AdminsList)
+            {
+                var identityUser = await _userManager.FindByEmailAsync(Admin.Email);
+                Admin.IsRegistered = identityUser != null;
+            }
+
+            return View(AdminsList);
         }
 
         // GET: Admins/Details/5
@@ -187,7 +196,8 @@ namespace AVTMS.Controllers
                 Name = Admins.FirstName,  // or combine names as needed
                 Email = Admins.Email,
                 Password = Admins.Password,
-                ConfirmPassword = Admins.Password // You can set a default password or leave it empty
+                ConfirmPassword = Admins.Password,// You can set a default password or leave it empty
+                UserType = Admins.UserType,
                 // You may leave Password/ConfirmPassword empty or handle them as needed.
             };
 
@@ -214,6 +224,7 @@ namespace AVTMS.Controllers
                     UserName = model.Email,
                     NormalizedEmail = model.Email.ToUpper(),
                     NormalizedUserName = model.Email.ToUpper(),
+                    UserType = model.UserType,
                 };
 
                 // Use UserManager to create the user; it will hash the password internally.
@@ -238,6 +249,44 @@ namespace AVTMS.Controllers
 
             // Return the partial view with validation errors, if any.
             return PartialView("_RegisterPartial", model);
+        }
+
+        // Update User Directly
+        [HttpPost]
+        public async Task<IActionResult> SyncToRegisterModel(int id)
+        {
+            var Admins = await _context.Admins.FindAsync(id);
+            if (Admins == null)
+                return Json(new { success = false, message = "Auth user not found." });
+
+            var identityUser = await _userManager.FindByEmailAsync(Admins.Email);
+            if (identityUser == null)
+                return Json(new { success = false, message = "Identity user not found." });
+
+            // Update Identity fields
+            identityUser.UserName = Admins.Email;
+            identityUser.Email = Admins.Email;
+            identityUser.PhoneNumber = Admins.PhoneNumber;
+            identityUser.PasswordHash = _userManager.PasswordHasher.HashPassword(identityUser, Admins.Password);
+
+            // Cast to custom Identity model
+            if (identityUser is Users extendedUser)
+            {
+                extendedUser.FullName = Admins.FirstName;
+                extendedUser.UserType = Admins.UserType;
+                extendedUser.PasswordHash = _userManager.PasswordHasher.HashPassword(identityUser, Admins.Password);
+            }
+
+            var result = await _userManager.UpdateAsync(identityUser);
+            if (result.Succeeded)
+            {
+                return Json(new { success = true, message = "Admins User updated successfully!" });
+            }
+            else
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return Json(new { success = false, message = $"Update failed: {errors}" });
+            }
         }
     }
 }

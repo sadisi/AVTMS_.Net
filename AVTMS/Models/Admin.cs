@@ -1,4 +1,6 @@
-﻿namespace AVTMS.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AVTMS.Models
 {
     public class Admin: UserActivity
     {
@@ -17,7 +19,8 @@
         public string UserType { get; set; } = "Admin";
         public string UserBranch { get; set; }
 
-
+        [NotMapped]
+        public bool IsRegistered { get; set; }
 
     }
 }

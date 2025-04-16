@@ -13,6 +13,7 @@
         <h2 class="text-center mb-4">Verify Email</h2>
         <form asp-action="RegisteredUserEmailVerify" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="mb-3">
                 <label asp-for="Email" class="form-label"></label>
                 <input asp-for="Email" class="form-control" placeholder="Enter your email address" />

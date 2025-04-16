@@ -1,4 +1,6 @@
-﻿namespace AVTMS.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AVTMS.Models
 {
     public class AuthUsers :UserActivity
     {
@@ -16,8 +18,9 @@
 
         public string UserType { get; set; } = "Authorized User";
         public string UserBranch { get; set; }
-       
 
 
+        [NotMapped] 
+        public bool IsRegistered { get; set; }
     }
 }

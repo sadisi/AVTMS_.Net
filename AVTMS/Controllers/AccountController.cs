@@ -64,6 +64,7 @@ namespace AVTMS.Controllers
                     FullName = model.Name,
                     Email = model.Email,
                     UserName = model.Email,
+                    UserType = model.UserType
                 };
 
                 var result = await userManager.CreateAsync(users, model.Password);
@@ -167,7 +168,7 @@ namespace AVTMS.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
 
@@ -207,7 +208,8 @@ namespace AVTMS.Controllers
 
                 user.FullName = model.FullName;
                 user.Email = model.Email;
-                user.UserName = model.Email; // Identity usually links Email and UserName
+                user.UserName = model.Email;// Identity usually links Email and UserName
+                user.UserType = model.UserType;
 
                 var result = await userManager.UpdateAsync(user);
                 if (result.Succeeded)

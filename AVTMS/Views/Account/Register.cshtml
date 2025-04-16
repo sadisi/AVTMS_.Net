@@ -14,6 +14,16 @@
         <form asp-action="Register" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
+                <label asp-for="UserType" class="form-label"></label>
+                <select asp-for="UserType" class="form-select">
+                    <option value="">-- Select User Type --</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Base User">Base User</option>
+                    <option value="Authorized User">Authorized User</option>
+                </select>
+                <span asp-validation-for="UserType" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
                 <label asp-for="Name" class="form-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>

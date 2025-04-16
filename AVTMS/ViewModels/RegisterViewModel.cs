@@ -5,6 +5,9 @@ namespace AVTMS.ViewModels
     public class RegisterViewModel
     {
 
+        [Required(ErrorMessage = "User Type is required.")]
+        public string UserType { get; set; }
+
         [Required(ErrorMessage ="Name is required.")]
         public string Name { get; set; }
 
