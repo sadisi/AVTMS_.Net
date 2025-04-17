@@ -17,5 +17,7 @@ namespace AVTMS.Data
         public DbSet<Admin> Admins { get; set; }
         public DbSet<AVTMS.Models.BaseUser> BaseUser { get; set; } = default!;
         public DbSet<AVTMS.Models.AuthUsers> AuthUsers { get; set; } = default!;
+        public DbSet<AVTMS.Models.VehicleOwner> VehicleOwner { get; set; } = default!;
+        public DbSet<AVTMS.Models.VehicleNotes> VehicleNotes { get; set; } = default!;
     }
 }

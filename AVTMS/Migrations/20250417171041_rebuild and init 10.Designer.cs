@@ -4,6 +4,7 @@ using AVTMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AVTMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250417171041_rebuild and init 10")]
+    partial class rebuildandinit10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -324,25 +327,23 @@ namespace AVTMS.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("VehicleNote")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("VehicleNumberPlate")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("VehicleOwnerNIC")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("VehicleOwnerId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleOwnerNIC");
+                    b.HasIndex("VehicleOwnerId");
 
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("AVTMS.Models.VehicleNotes", b =>
+            modelBuilder.Entity("AVTMS.Models.VehicleOwner", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -362,35 +363,9 @@ namespace AVTMS.Migrations
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("NoteContent")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehicleId");
-
-                    b.ToTable("VehicleNotes");
-                });
-
-            modelBuilder.Entity("AVTMS.Models.VehicleOwner", b =>
-                {
                     b.Property<string>("NIC")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("CreatedByID")
+                        .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("OwnerAddress")
                         .IsRequired()
@@ -408,7 +383,7 @@ namespace AVTMS.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("NIC");
+                    b.HasKey("Id");
 
                     b.ToTable("VehicleOwner");
                 });
@@ -549,22 +524,11 @@ namespace AVTMS.Migrations
                 {
                     b.HasOne("AVTMS.Models.VehicleOwner", "VehicleOwner")
                         .WithMany("Vehicles")
-                        .HasForeignKey("VehicleOwnerNIC")
+                        .HasForeignKey("VehicleOwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("VehicleOwner");
-                });
-
-            modelBuilder.Entity("AVTMS.Models.VehicleNotes", b =>
-                {
-                    b.HasOne("AVTMS.Models.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

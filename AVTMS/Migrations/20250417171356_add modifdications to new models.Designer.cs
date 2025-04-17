@@ -4,6 +4,7 @@ using AVTMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AVTMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250417171356_add modifdications to new models")]
+    partial class addmodifdicationstonewmodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -324,7 +327,6 @@ namespace AVTMS.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("VehicleNote")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("VehicleNumberPlate")
@@ -340,39 +342,6 @@ namespace AVTMS.Migrations
                     b.HasIndex("VehicleOwnerNIC");
 
                     b.ToTable("Vehicles");
-                });
-
-            modelBuilder.Entity("AVTMS.Models.VehicleNotes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedByID")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NoteContent")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehicleId");
-
-                    b.ToTable("VehicleNotes");
                 });
 
             modelBuilder.Entity("AVTMS.Models.VehicleOwner", b =>
@@ -554,17 +523,6 @@ namespace AVTMS.Migrations
                         .IsRequired();
 
                     b.Navigation("VehicleOwner");
-                });
-
-            modelBuilder.Entity("AVTMS.Models.VehicleNotes", b =>
-                {
-                    b.HasOne("AVTMS.Models.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

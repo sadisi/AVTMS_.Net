@@ -1,0 +1,115 @@
+﻿@model AVTMS.Models.VehicleOwner
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Vehicle Owner</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OwnerName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnerMobileNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OwnerMobileNumber)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnerEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OwnerEmail)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnerAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OwnerAddress)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedByID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedByID)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.NIC">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@if (Model.Vehicles != null && Model.Vehicles.Any())
+{
+    <h4 class="mt-4">Registered Vehicles</h4>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Vehicle Number</th>
+                <th>Model</th>
+                <th>Color</th>
+                <th>Registered Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vehicle in Model.Vehicles)
+            {
+                <tr>
+                    <td>@vehicle.VehicleNumberPlate</td>
+                    <td>@vehicle.VehicleModel</td>
+                    <td>@vehicle.VehicleColor</td>
+                    <td>@vehicle.CreatedOn.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a asp-controller="Vehicle" asp-action="Details" asp-route-id="@vehicle.VehicleNumberPlate">View</a> |
+                        <a asp-controller="Vehicle" asp-action="Edit" asp-route-id="@vehicle.VehicleNumberPlate">Edit</a>
+                      
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><em>No vehicles registered under this owner.</em></p>
+}
+
+                    <div>
+    <h4 class="mt-4">Print</h4>
+                    </div>
