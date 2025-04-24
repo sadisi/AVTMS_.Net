@@ -84,7 +84,7 @@ namespace AVTMS.Controllers
             {
                 return NotFound();
             }
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Id", vehicleNotes.VehicleId);
+            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate", vehicleNotes.VehicleId);
             return View(vehicleNotes);
         }
 
@@ -122,7 +122,7 @@ namespace AVTMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Id", vehicleNotes.VehicleId);
+            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate", vehicleNotes.VehicleId);
             return View(vehicleNotes);
         }
 

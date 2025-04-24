@@ -30,111 +30,108 @@
 
 
 
-<h1>Base Users</h1>
+<h1>Base Users Registration Page</h1>
 <div class="mb-3">
 
-    <a class="btn btn-secondary" asp-area="" asp-controller="Admins" asp-action="Index">👥 Admin</a>
-        <a class="btn btn-secondary" asp-area="" asp-controller="AuthUsers" asp-action="Index">👥 Authorized Users</a>
+    <a class="btn btn-primary" asp-area="" asp-controller="Admins" asp-action="Index"><i class="fa fa-plus"></i>👥 Admin</a>
+    <a class="btn btn-primary" asp-area="" asp-controller="AuthUsers" asp-action="Index"><i class="fa fa-plus"></i>👥 Authorized Users</a>
 </div>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class=" btn btn-outline-success"><i class="fa fa-plus"></i>Add New Base User</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EmployeeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NIC)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MiddleName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegisteredDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserBranch)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NIC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MiddleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegisteredDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserBranch)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    <!-- <a class="btn btn-link registerButton" data-id="@item.Id">Register</a>-->
-                    @if (item.IsRegistered)
-                    {
-                        <a class="btn btn-link  updateButton" data-id="@item.Id">Update</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-link registerButton" data-id="@item.Id">Register</a>
-                    }
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-  <!--Aditional dev delete-->
+<div class="card">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmployeeId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NIC)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
 
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Password)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </th>
+                   
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserBranch)
+                    </th>
+                    <th>Edit</th>
+                    <th>View</th>
+                    <th>Delete</th>
+                    <th>Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NIC)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserBranch)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</a>
+
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i>View</a>
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                        </td>
+                        <td>
+                            <!--<a class="btn btn-sm btn-primary updateButton" data-id="@item.Id">Update</a> -->
+                            @if (item.IsRegistered)
+                            {
+                                <a class=" updateButton btn btn-success" data-id="@item.Id"><i class=" fa-arrows-rotate"></i>Update</a>
+                            }
+                            else
+                            {
+                                <a class="registerButton btn btn-success " data-id="@item.Id">Register</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Aditional dev delete-->
 <!-- Modal container for registration form -->
 <div id="registerModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

@@ -7,36 +7,42 @@
 <h1 class="mb-4">Registered Users</h1>
 <div class="mb-3">
     <a class="btn btn-secondary" asp-area="" asp-controller="Account" asp-action="VerifyEmail">Change Password</a>
-   
+
+</div>
+
+<div class="card">
+    <div class="card-header">
     </div>
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>User Type</th>
+                    <th>User Name</th>
+                    <th>Password</th>
+                    <th>Actions</th>
 
-<table class="table table-bordered table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>User Type</th>
-            <th>User Name</th>
-            <th>Password</th>
-           
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.FullName</td>
+                        <td>@user.Email</td>
+                        <td>@user.UserType</td>
+                        <td>@user.UserName</td>
+                        <td>@user.PasswordHash?.Substring(0, 10)...</td>
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>@user.FullName</td>
-                <td>@user.Email</td>
-                <td>@user.UserType</td>
-                <td>@user.UserName</td>
-                <td>@user.PasswordHash?.Substring(0, 10)...</td>
-
-                <td>
-                    <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-sm btn-warning">Edit</a>
-                    <a asp-action="DeleteUser" asp-route-id="@user.Id" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                        <td>
+                            <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="DeleteUser" asp-route-id="@user.Id" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
