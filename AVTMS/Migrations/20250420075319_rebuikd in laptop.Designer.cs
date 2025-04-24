@@ -4,6 +4,7 @@ using AVTMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AVTMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250420075319_rebuikd in laptop")]
+    partial class rebuikdinlaptop
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,34 +224,6 @@ namespace AVTMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BaseUser");
-                });
-
-            modelBuilder.Entity("AVTMS.Models.DetectedVehicle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DetectedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NumberPlate")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("VideoFileName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("VideoPath")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DetectedVehicle");
                 });
 
             modelBuilder.Entity("AVTMS.Models.Users", b =>

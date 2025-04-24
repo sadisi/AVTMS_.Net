@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Upload Vehicle Video";
+}
+
+<h2 class="text-2xl font-semibold mb-4">Upload Vehicle Footage</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="bg-green-100 text-green-800 p-2 rounded mb-3">
+        @TempData["Success"]
+    </div>
+}
+
+<form asp-controller="VehicleDetection"
+      asp-action="UploadVideo"
+      method="post"
+      enctype="multipart/form-data"
+      class="space-y-4">
+
+    <div>
+        <label for="videoFile" class="block font-medium mb-1">Select Video File</label>
+        <input type="file"
+               name="videoFile"
+               id="videoFile"
+               accept="video/*"
+               class="block w-full border rounded px-3 py-2"
+               required />
+    </div>
+
+    <div>
+        <button type="submit"
+                class="text-white px-4 py-2 rounded bg-blue-600 hover:bg-blue-800">
+            Upload & Detect
+        </button>
+    </div>
+</form>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="mt-4 text-red-500">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@if (TempData["VideoPath"] != null)
+{
+    <div class="mt-6">
+        <h3 class="text-lg font-semibold mb-2">Uploaded Video Preview</h3>
+        <video width="640" height="360" controls class="rounded shadow">
+            <source src="@TempData["VideoPath"]" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+}
+

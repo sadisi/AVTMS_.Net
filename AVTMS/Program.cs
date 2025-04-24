@@ -1,5 +1,6 @@
 using AVTMS.Data;
 using AVTMS.Models;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -36,6 +37,20 @@ builder.Services.AddIdentity<Users, IdentityRole>(Options =>
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+
+// Configure file size limits for multipart/form-data (i.e., file uploads)
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 104857600; // 100MB
+});
+
+// Configure HttpClient with a custom timeout
+builder.Services.AddHttpClient("YoloApiClient", client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(100); // Set timeout to 30 seconds
+});
+
 var app = builder.Build();
 
 
@@ -52,6 +67,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Serve static files from the "wwwroot" folder
+app.UseStaticFiles(); 
 
 app.UseAuthorization();
 

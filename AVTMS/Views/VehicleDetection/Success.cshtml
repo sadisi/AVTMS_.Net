@@ -1,0 +1,13 @@
+﻿@model AVTMS.Models.DetectedVehicle
+
+@{
+    ViewData["Title"] = "Detection Successful";
+}
+
+<h2 class="text-2xl font-bold mb-4 text-green-700">Vehicle Number Plate Detected!</h2>
+
+<div class="bg-white rounded shadow p-4 space-y-2 border border-green-300">
+    <p><strong>Number Plate:</strong> @Model.NumberPlate</p>
+    <p><strong>Detected At:</strong> @Model.DetectedAt.ToString("f")</p>
+    <p><strong>Uploaded Video:</strong> <a href="@Model.VideoPath" class="text-blue-600 underline" target="_blank">@Model.VideoFileName</a></p>
+</div>
