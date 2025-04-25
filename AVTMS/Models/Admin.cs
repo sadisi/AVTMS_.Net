@@ -7,41 +7,40 @@ namespace AVTMS.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Employee ID")]
+        [Display(Name = "Employee ID",Prompt = "Enter Employee ID")]
         [Required(ErrorMessage = "User ID is required.")]
         public int EmployeeId { get; set; }
 
-        [Display(Name = "Employee NIC")]
+        [Display(Name = "Employee NIC",Prompt = "Enter Employee NIC")]
         [Required(ErrorMessage = "NIC is required.")]
         public string NIC { get; set; }
 
-        [Display(Name = "First Name")]
+        [Display(Name = "First Name",Prompt = "Enter First Name")]
         [Required(ErrorMessage = "First Name is required.")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Middle Name")]
+        [Display(Name = "Middle Name",Prompt = "Enter Middle Name")]
         [Required(ErrorMessage = "Middle Name is required.")]
         public string MiddleName { get; set; }
 
-        [Display(Name = "Last Name")]
+        [Display(Name = "Last Name",Prompt = "Enter Last Name")]
         [Required(ErrorMessage = "Last Name is required.")]
         public string LastName { get; set; }
 
-        [Display(Name = "FirstName")]
         public string FullName => $"{FirstName} {MiddleName} {LastName}";
 
-        [Display(Name = "Email")]
+        [Display(Name = "Email",Prompt = "Enter Email")]
         [EmailAddress]
         [Required(ErrorMessage = "Email is required.")]
         public string Email { get; set; }
 
-        [Display(Name = "Password")]
+        [Display(Name = "Password",Prompt = "Enter Password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Password is required.")]
         [StringLength(40, MinimumLength = 8, ErrorMessage = "The {0} must be at {2} and at max {1} characters long.")]
         public string Password { get; set; }
 
-        [Display(Name = "Phone Number")]
+        [Display(Name = "Phone Number",Prompt = "Enter Phone Number")]
         [Phone]
         [Required(ErrorMessage = "Phone Number is required.")]
         public string PhoneNumber { get; set; }

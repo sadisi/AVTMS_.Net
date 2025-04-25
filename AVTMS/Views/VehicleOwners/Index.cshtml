@@ -35,13 +35,16 @@
                     <th>
                         @Html.DisplayNameFor(model => model.CreatedOn)
                     </th>
+                    
                     <th>
-                        @Html.DisplayNameFor(model => model.ModifiedBy)
+                        Edit
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.ModifiedOn)
+                        View
                     </th>
-                    <th></th>
+                    <th>
+                        Delete
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -66,16 +69,17 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.CreatedOn)
                         </td>
+
+
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModifiedBy)
+                            <a asp-action="Edit" asp-route-id="@item.NIC" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</a>
+
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModifiedOn)
+                            <a asp-action="Details" asp-route-id="@item.NIC" class="btn btn-warning"><i class="fa fa-eye"></i>View</a>
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.NIC">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.NIC">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.NIC">Delete</a>
+                            <a asp-action="Delete" asp-route-id="@item.NIC" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
                 }

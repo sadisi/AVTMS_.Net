@@ -1,5 +1,6 @@
 using AVTMS.Data;
 using AVTMS.Models;
+using AVTMS.Services;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//Email invoice services
+builder.Services.AddScoped<EmailServices>();
 
 //---------Connect Database -----
 var ConnectionString = builder.Configuration.GetConnectionString("MySqlConn");

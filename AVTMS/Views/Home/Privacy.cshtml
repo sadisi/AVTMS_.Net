@@ -2,5 +2,49 @@
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
+@{
+    ViewData["Title"] = "Terms & Conditions";
+}
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="max-w-4xl mx-auto mt-10 p-8 bg-white shadow-xl rounded-2xl border border-gray-200">
+    <h1 class="text-3xl font-bold text-blue-800 mb-6 border-b pb-2">📄 Terms and Conditions</h1>
+
+    <p class="mb-4 text-gray-700">
+        By using <strong>AVTMS</strong>, you agree to the following terms. Please read them carefully before accessing or uploading data.
+    </p>
+
+    <div class="space-y-5">
+        <section>
+            <h2 class="text-xl font-semibold text-blue-600 mb-2">✅ 1. Authorized Usage</h2>
+            <ul class="list-disc pl-5 text-gray-700">
+                <li>Only authorized staff and enforcement officers may use this platform.</li>
+                <li>Actions within the system are monitored and logged.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-semibold text-blue-600 mb-2">🔒 2. Security Obligations</h2>
+            <ul class="list-disc pl-5 text-gray-700">
+                <li>You must not share your credentials.</li>
+                <li>Any attempt to tamper, reverse-engineer, or disrupt service is prohibited.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-semibold text-blue-600 mb-2">⚠️ 3. Data Responsibility</h2>
+            <p class="text-gray-700">You are responsible for the accuracy of any uploaded footage. Misuse may lead to account termination.</p>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-semibold text-blue-600 mb-2">💼 4. System Ownership</h2>
+            <p class="text-gray-700">AVTMS, its source code, and all data belong to the project stakeholders and must not be copied without permission.</p>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-semibold text-blue-600 mb-2">📅 5. Updates</h2>
+            <p class="text-gray-700">Terms may be modified. Continued use implies acceptance of the latest version.</p>
+        </section>
+    </div>
+
+    <p class="mt-8 text-sm text-gray-500">Last revised: @DateTime.Now.ToString("MMMM dd, yyyy")</p>
+</div>

@@ -10,62 +10,47 @@
 <div>
     <h4>Vehicle</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VehicleNumberPlate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VehicleNumberPlate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VehicleModel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VehicleModel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VehicleColor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VehicleColor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VehicleNote)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VehicleNote)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VehicleOwner)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VehicleOwner.NIC)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedByID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedByID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedOn)
-        </dd>
-    </dl>
+    <table class="table table-bordered table-striped table-hover">
+        <tbody>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.VehicleNumberPlate)</td>
+                <td>@Html.DisplayFor(model => model.VehicleNumberPlate)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.VehicleModel)</td>
+                <td>@Html.DisplayFor(model => model.VehicleModel)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.VehicleColor)</td>
+                <td>@Html.DisplayFor(model => model.VehicleColor)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.VehicleNote)</td>
+                <td>@Html.DisplayFor(model => model.VehicleNote)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.VehicleOwner)</td>
+                <td>@Html.DisplayFor(model => model.VehicleOwner.NIC)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.CreatedByID)</td>
+                <td>@Html.DisplayFor(model => model.CreatedByID)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.CreatedOn)</td>
+                <td>@Html.DisplayFor(model => model.CreatedOn)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ModifiedBy)</td>
+                <td>@Html.DisplayFor(model => model.ModifiedBy)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.ModifiedOn)</td>
+                <td>@Html.DisplayFor(model => model.ModifiedOn)</td>
+            </tr>
+        </tbody>
+    </table>
+
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />

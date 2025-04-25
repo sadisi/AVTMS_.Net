@@ -73,7 +73,9 @@ namespace AVTMS.Controllers
                 ///
                 _context.Add(vehicleOwner);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //after the user register redirect to vehicle register page
+                return RedirectToAction("Create", "Vehicles");
+                //return RedirectToAction(nameof(Index));
             }
             return View(vehicleOwner);
         }
