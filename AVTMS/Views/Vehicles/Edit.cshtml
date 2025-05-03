@@ -7,68 +7,153 @@
 <h1>Edit</h1>
 
 <h4>Vehicle</h4>
+
+<!-- Created Date & Time Info Box -->
+<div class="info-box mb-3 text-bg-success shadow-sm rounded-3">
+    <span class="info-box-icon"><i class="fas fa-server fa-lg"></i></span>
+    <div class="info-box-content w-100">
+        <span class="info-box-text fw-bold badge bg-info text-dark mb-2 px-3 py-2"
+              style="font-size: 1.2rem; letter-spacing: 0.5px;">
+            Created On
+        </span>
+        <div class="d-flex justify-content-between px-1">
+            <span><i class="fas fa-calendar-alt me-1"></i> @Model.CreatedOn.ToString("yyyy-MM-dd")</span>
+            <span><i class="fas fa-clock me-1"></i> @Model.CreatedOn.ToString("HH:mm:ss")</span>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="VehicleNumberPlate" class="control-label"></label>
-                <input asp-for="VehicleNumberPlate" class="form-control" />
-                <span asp-validation-for="VehicleNumberPlate" class="text-danger"></span>
+            <div class="row">
+                @* <div class="col-md-6"> *@
+                @*     <div class="form-group"> *@
+                @*         <label asp-for="CreatedOn" class="control-label"></label> *@
+                @*         <input asp-for="CreatedOn" class="form-control" readonly /> *@
+                @*         <span asp-validation-for="CreatedOn" class="text-danger"></span> *@
+                @*     </div> *@
+                @* </div> *@
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Current Image</label><br />
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                        {
+                            <img src="@Model.ImagePath" alt="Vehicle Image" style="max-width: 300px; height: auto; margin-bottom: 10px;" />
+                        }
+                        else
+                        {
+                            <p class="badge bg-danger">No image uploaded.</p>
+                        }
+
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- File upload input -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Select New Image</label>
+                                <input type="file" name="imageFile" class="form-control" accept="image/*" onchange="previewImage(event)">
+                            </div>
+                        </div>
+                        <!-- Placeholder text -->
+                        <p id="noImageText" class="badge bg-danger ml-lg-5  mb-2 px-3 py-2">Not selected new image</p>
+
+                        <!-- Image preview -->
+                        <div class="col-md-6">
+                            <img id="imagePreview" src="" alt="Preview" style="max-height: 200px; display: none;" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleNumberPlate" class="control-label"></label>
+                        <input asp-for="VehicleNumberPlate" class="form-control" />
+                        <span asp-validation-for="VehicleNumberPlate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleModel" class="control-label"></label>
+                        <input asp-for="VehicleModel" class="form-control" />
+                        <span asp-validation-for="VehicleModel" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleColor" class="control-label"></label>
+                        <input asp-for="VehicleColor" class="form-control" />
+                        <span asp-validation-for="VehicleColor" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleNote" class="control-label"></label>
+                        <input asp-for="VehicleNote" class="form-control" />
+                        <span asp-validation-for="VehicleNote" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleOwnerNIC" class="control-label"></label>
+                        <select asp-for="VehicleOwnerNIC" class="form-control" asp-items="ViewBag.VehicleOwnerNIC"></select>
+                        <span asp-validation-for="VehicleOwnerNIC" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CreatedByID" class="control-label"></label>
+                        <input asp-for="CreatedByID" class="form-control" readonly />
+                        <span asp-validation-for="CreatedByID" class="text-danger"></span>
+                    </div>
+                </div>
+                
             </div>
+            <hr />
             <div class="form-group">
-                <label asp-for="VehicleModel" class="control-label"></label>
-                <input asp-for="VehicleModel" class="form-control" />
-                <span asp-validation-for="VehicleModel" class="text-danger"></span>
+                <input type="submit" value="Update" class="btn btn-primary btn-block" />
             </div>
-            <div class="form-group">
-                <label asp-for="VehicleColor" class="control-label"></label>
-                <input asp-for="VehicleColor" class="form-control" />
-                <span asp-validation-for="VehicleColor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VehicleNote" class="control-label"></label>
-                <input asp-for="VehicleNote" class="form-control" />
-                <span asp-validation-for="VehicleNote" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VehicleOwnerNIC" class="control-label"></label>
-                <select asp-for="VehicleOwnerNIC" class="form-control" asp-items="ViewBag.VehicleOwnerNIC"></select>
-                <span asp-validation-for="VehicleOwnerNIC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedByID" class="control-label"></label>
-                <input asp-for="CreatedByID" class="form-control" />
-                <span asp-validation-for="CreatedByID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedOn" class="control-label"></label>
-                <input asp-for="CreatedOn" class="form-control" />
-                <span asp-validation-for="CreatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedBy" class="control-label"></label>
-                <input asp-for="ModifiedBy" class="form-control" />
-                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-block">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function previewImage(event) {
+            var file = event.target.files[0];
+            var imagePreview = document.getElementById('imagePreview');
+            var noImageText = document.getElementById('noImageText');
+
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    imagePreview.src = reader.result;
+                    imagePreview.style.display = 'block';
+                    noImageText.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '';
+                imagePreview.style.display = 'none';
+                noImageText.style.display = 'block';
+            }
+        }
+    </script>
 }

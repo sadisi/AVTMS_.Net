@@ -9,6 +9,7 @@ using AVTMS.Data;
 using AVTMS.Models;
 using AVTMS.Services;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using Microsoft.Extensions.Hosting;
 
 namespace AVTMS.Controllers
 {
@@ -16,19 +17,19 @@ namespace AVTMS.Controllers
     {
         private readonly AppDbContext _context;
         private readonly EmailServices _emailService;//
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public VehiclesController(AppDbContext context, EmailServices emailService)
+        public VehiclesController(AppDbContext context, EmailServices emailService, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             _emailService = emailService; //
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
       
-
-
             var appDbContext = _context.Vehicles.Include(v => v.VehicleOwner);
             return View(await appDbContext.ToListAsync());
         }
@@ -56,7 +57,6 @@ namespace AVTMS.Controllers
         public IActionResult Create()
         {
 
-        
 
             //geting vehicle owners using nic as primary key
             ViewData["VehicleOwnerNIC"] = new SelectList(_context.Set<VehicleOwner>(), "NIC", "NIC");
@@ -64,20 +64,36 @@ namespace AVTMS.Controllers
         }
 
         // POST: Vehicles/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Create(Vehicle vehicle)
+        public async Task<IActionResult> Create(Vehicle vehicle, IFormFile imageFile)
         {
             vehicle.CreatedByID = User.Identity.Name;
             vehicle.CreatedOn = DateTime.Now;
 
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
+                    // Save the image file if provided
+                    if (imageFile != null && imageFile.Length > 0)
+                    {
+                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "vehicleimages");
+                        Directory.CreateDirectory(uploadsFolder); // Ensure folder exists
+
+                        var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await imageFile.CopyToAsync(stream);
+                        }
+
+                        vehicle.ImagePath = "/vehicleimages/" + uniqueFileName; // For web access
+                    }
+
                     _context.Add(vehicle);
                     await _context.SaveChangesAsync();
 
@@ -89,123 +105,127 @@ namespace AVTMS.Controllers
                     {
                         string subject = "Vehicle Registration Successful";
                         string body = $@" <html>
-    <head>
-        <style>
-            body {{
-                font-family: Arial, sans-serif;
-                color: #333;
-                line-height: 1.6;
-                margin: 0;
-                padding: 0;
-            }}
-            h2 {{
-                color: #4CAF50;
-            }}
-            p {{
-                font-size: 16px;
-                color: #555;
-            }}
-            ul {{
-                list-style-type: none;
-                padding: 0;
-            }}
-            li {{
-                margin-bottom: 10px;
-            }}
-            li strong {{
-                color: #333;
-            }}
-            table {{
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }}
-            th, td {{
-                border: 1px solid #ddd;
-                padding: 10px;
-                text-align: left;
-            }}
-            th {{
-                background-color: #4CAF50;
-                color: white;
-            }}
-            td {{
-                background-color: #f9f9f9;
-            }}
-            .footer {{
-                font-size: 12px;
-                color: #777;
-                margin-top: 20px;
-            }}
-            .subject {{
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px;
-                text-align: center;
-                font-size: 20px;
-                font-weight: bold;
-            }}
-        </style>
-    </head>
-    <body>
-        <div class='subject'>Vehicle Registration Successful</div>
-        <h2>Vehicle Registration Confirmation</h2>
-        <p>Dear {owner.OwnerName},</p>
-        <p>Your vehicle has been successfully registered in the system.</p>
-        
-        <table>
-            <tr>
-                <th>Vehicle Number Plate :</th>
-                <td>{vehicle.VehicleNumberPlate}</td>
-            </tr>
-            <tr>
-                <th>Owner NIC : </th>
-                <td>{owner.NIC}</td>
-            </tr>
-            <tr>
-                <th>Registered Time :</th>
-                <td>{vehicle.CreatedOn}</td>
-            </tr>
-        </table>
+<head>
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }}
+        h2 {{
+            color: #4CAF50;
+        }}
+        p {{
+            font-size: 16px;
+            color: #555;
+        }}
+        ul {{
+            list-style-type: none;
+            padding: 0;
+        }}
+        li {{
+            margin-bottom: 10px;
+        }}
+        li strong {{
+            color: #333;
+        }}
+        table {{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }}
+        th, td {{
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }}
+        th {{
+            background-color: #4CAF50;
+            color: white;
+        }}
+        td {{
+            background-color: #f9f9f9;
+        }}
+        .footer {{
+            font-size: 12px;
+            color: #777;
+            margin-top: 20px;
+        }}
+        .subject {{
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }}
+    </style>
+</head>
+<body>
+    <div class='subject'>Vehicle Registration Successful</div>
+    <h2>Vehicle Registration Confirmation</h2>
+    <p>Dear {owner.OwnerName},</p>
+    <p>Your vehicle has been successfully registered in the system.</p>
+    
+    <table>
+        <tr>
+            <th>Vehicle Number Plate :</th>
+            <td>{vehicle.VehicleNumberPlate}</td>
+        </tr>
+        <tr>
+            <th>Owner NIC : </th>
+            <td>{owner.NIC}</td>
+        </tr>
+         <tr>
+            <th>Model : </th>
+            <td>{vehicle.VehicleModel}</td>
+        </tr>
+        <tr>
+            <th>Registered Time :</th>
+            <td>{vehicle.CreatedOn}</td>
+        </tr>
+    </table>
 
-        <p>Thank you for using our system.</p>
-        
-        <div class='footer'>
-            <p><strong>Note:</strong> This is a system-generated receipt. Please do not reply to this email.</p>
-        </div>
-    </body>
-    </html>";
+    <p>Thank you for using our system.</p>
+    
+    <div class='footer'>
+        <p><strong>Note:</strong> This is a system-generated receipt. Please do not reply to this email.</p>
+    </div>
+</body>
+</html>";
 
                         await _emailService.SendEmailAsync(owner.OwnerEmail, subject, body);
                     }
 
                     Console.WriteLine("Vehicle saved and email sent successfully");
-                    //message to frontend user
                     TempData["SuccessMessage"] = "The vehicle has been successfully added to the system.";
                     return RedirectToAction(nameof(Index));
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("ModelState is INVALID");
-                    foreach (var key in ModelState.Keys)
-                    {
-                        var errors = ModelState[key].Errors;
-                        foreach (var error in errors)
-                        {
-                            Console.WriteLine($"Field: {key}, Error: {error.ErrorMessage}");
-                        }
-                    }
+                    Console.WriteLine("Exception: " + ex.Message);
+                    ModelState.AddModelError("", "Error: " + ex.Message);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine("Exception: " + ex.Message);
-                ModelState.AddModelError("", "Error: " + ex.Message);
+                Console.WriteLine("ModelState is INVALID");
+                foreach (var key in ModelState.Keys)
+                {
+                    var errors = ModelState[key].Errors;
+                    foreach (var error in errors)
+                    {
+                        Console.WriteLine($"Field: {key}, Error: {error.ErrorMessage}");
+                    }
+                }
             }
 
             ViewData["VehicleOwnerNIC"] = new SelectList(_context.Set<VehicleOwner>(), "NIC", "NIC", vehicle.VehicleOwnerNIC);
             return View(vehicle);
         }
+
 
 
         /* original default code wieth normal vehicle added code
@@ -272,37 +292,90 @@ namespace AVTMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Vehicle vehicle)
         {
+            if (id != vehicle.Id)
+                return NotFound();
+
             vehicle.ModifiedBy = User.Identity.Name;
             vehicle.ModifiedOn = DateTime.Now;
-            if (id != vehicle.Id)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    if (vehicle.ImageFile != null && vehicle.ImageFile.Length > 0)
+                    {
+                        string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "vehicleimages");
+                        Directory.CreateDirectory(uploadsFolder); // Ensure folder exists
+
+                        // Delete old image if it exists
+                        if (!string.IsNullOrEmpty(vehicle.ImagePath))
+                        {
+                            string oldPath = Path.Combine(_hostEnvironment.WebRootPath, vehicle.ImagePath.TrimStart('/'));
+                            if (System.IO.File.Exists(oldPath))
+                                System.IO.File.Delete(oldPath);
+                        }
+
+                        string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(vehicle.ImageFile.FileName);
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await vehicle.ImageFile.CopyToAsync(fileStream);
+                        }
+
+                        vehicle.ImagePath = "/vehicleimages/" + uniqueFileName;
+                    }
+
                     _context.Update(vehicle);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!VehicleExists(vehicle.Id))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["VehicleOwnerNIC"] = new SelectList(_context.Set<VehicleOwner>(), "NIC", "NIC", vehicle.VehicleOwnerNIC);
+
+            ViewData["VehicleOwnerNIC"] = new SelectList(_context.VehicleOwner, "NIC", "NIC", vehicle.VehicleOwnerNIC);
             return View(vehicle);
         }
+        /*   original default code only edit
+         *  public async Task<IActionResult> Edit(int id, Vehicle vehicle)
+           {
+               vehicle.ModifiedBy = User.Identity.Name;
+               vehicle.ModifiedOn = DateTime.Now;
+               if (id != vehicle.Id)
+               {
+                   return NotFound();
+               }
 
+               if (ModelState.IsValid)
+               {
+                   try
+                   {
+                       _context.Update(vehicle);
+                       await _context.SaveChangesAsync();
+                   }
+                   catch (DbUpdateConcurrencyException)
+                   {
+                       if (!VehicleExists(vehicle.Id))
+                       {
+                           return NotFound();
+                       }
+                       else
+                       {
+                           throw;
+                       }
+                   }
+                   return RedirectToAction(nameof(Index));
+               }
+               ViewData["VehicleOwnerNIC"] = new SelectList(_context.Set<VehicleOwner>(), "NIC", "NIC", vehicle.VehicleOwnerNIC);
+               return View(vehicle);
+           }
+        */
         // GET: Vehicles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

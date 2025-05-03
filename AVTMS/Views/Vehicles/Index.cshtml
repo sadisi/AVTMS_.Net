@@ -18,6 +18,9 @@
             <thead>
                 <tr>
                     <th>
+                       Image
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.VehicleNumberPlate)
                     </th>
                     <th>
@@ -46,6 +49,17 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.ImagePath))
+                            {
+                                //<img src="@Url.Content(item.ImagePath)" alt="Vehicle Image" width="100" height="60" />
+                                <img src="@item.ImagePath" alt="Vehicle Image" width="100" height="60" />
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">No Image</span>
+                            }
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.VehicleNumberPlate)
                         </td>

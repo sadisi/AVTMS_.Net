@@ -20,3 +20,23 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+/*Vehicle Edit option image styles*/
+
+.editimage {
+    width: 200px;
+    height: 120px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+
+/*Vehicle create option image preiew*/
+
+.imagPreview{
+    max-height: 200px;
+    margin-top:10px;
+    display:none;
+}

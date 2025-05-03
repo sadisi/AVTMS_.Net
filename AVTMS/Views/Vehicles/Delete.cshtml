@@ -13,6 +13,20 @@
     <table class="table table-bordered table-striped table-hover">
         <tbody>
             <tr>
+
+                <td>@Html.DisplayNameFor(model => model.ImagePath)</td> 
+                <td>
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <img src="@Model.ImagePath" alt="Vehicle Image" style="max-width:300px; height:auto;" />
+                }
+                else
+                {
+                        <span class="badge bg-danger"> No image uploaded</span>
+                }
+                </td>
+            </tr>
+            <tr>
                 <td>@Html.DisplayNameFor(model => model.VehicleNumberPlate)</td>
                 <td>@Html.DisplayFor(model => model.VehicleNumberPlate)</td>
             </tr>
@@ -51,7 +65,7 @@
         </tbody>
     </table>
 
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

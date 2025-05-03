@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AVTMS.Models
 {
@@ -29,6 +30,11 @@ namespace AVTMS.Models
         public string VehicleOwnerNIC { get; set; }
         public VehicleOwner? VehicleOwner { get; set; }
 
+
+        [Display(Name = "Vehicle Image")]
+        public string? ImagePath { get; set; }
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
 
 
 

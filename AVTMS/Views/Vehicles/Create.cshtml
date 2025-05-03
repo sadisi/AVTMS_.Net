@@ -10,46 +10,85 @@
 <h4>Vehicle</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="VehicleNumberPlate" class="control-label"></label>
-                <input asp-for="VehicleNumberPlate" class="form-control" />
-                <span asp-validation-for="VehicleNumberPlate" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Upload Image</label>
+                        <input type="file" name="imageFile" class="form-control" id="imageFileInput" accept="image/*" />
+                        <img id="imagePreview" src="#" alt="Image Preview" style="max-height: 200px; margin-top: 10px; display: none;" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleNumberPlate" class="control-label"></label>
+                        <input asp-for="VehicleNumberPlate" class="form-control" />
+                        <span asp-validation-for="VehicleNumberPlate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleModel" class="control-label"></label>
+                        <input asp-for="VehicleModel" class="form-control" />
+                        <span asp-validation-for="VehicleModel" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleColor" class="control-label"></label>
+                        <input asp-for="VehicleColor" class="form-control" />
+                        <span asp-validation-for="VehicleColor" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleNote" class="control-label"></label>
+                        <input asp-for="VehicleNote" class="form-control" />
+                        <span asp-validation-for="VehicleNote" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="VehicleOwnerNIC" class="control-label"></label>
+                        <select asp-for="VehicleOwnerNIC" class="form-control" asp-items="ViewBag.VehicleOwnerNIC"></select>
+                    </div>
+                </div>
             </div>
+
+            <hr />
             <div class="form-group">
-                <label asp-for="VehicleModel" class="control-label"></label>
-                <input asp-for="VehicleModel" class="form-control" />
-                <span asp-validation-for="VehicleModel" class="text-danger"></span>
+                <input type="submit" value="Create" class="btn btn-primary btn-block" />
             </div>
-            <div class="form-group">
-                <label asp-for="VehicleColor" class="control-label"></label>
-                <input asp-for="VehicleColor" class="form-control" />
-                <span asp-validation-for="VehicleColor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VehicleNote" class="control-label"></label>
-                <input asp-for="VehicleNote" class="form-control" />
-                <span asp-validation-for="VehicleNote" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VehicleOwnerNIC" class="control-label"></label>
-                <select asp-for="VehicleOwnerNIC" class ="form-control" asp-items="ViewBag.VehicleOwnerNIC"></select>
-            </div>
-         
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-block">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    //image preview
+
+    <script>
+        document.getElementById('imageFileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.getElementById('imagePreview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 }
