@@ -13,7 +13,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AVTMS| Dashboard</title>
+    <link rel="icon" type="image/png" href="~/avtmsfavicon.png">
+
+    <title>AVTMS </title>
 
 
     <!-- Google Font: Source Sans Pro -->
@@ -21,13 +23,18 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="~/AdminLTE/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
+    <link rel="stylesheet" href="~/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="~/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!--Slecter 2  for searcheble Drop Down-->
+     <link href="~/css/select2.min.css" rel="stylesheet" /> 
     <!-- iCheck -->
     <link rel="stylesheet" href="~/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
     <link rel="stylesheet" href="~/AdminLTE/plugins/jqvmap/jqvmap.min.css">
+    <!-- custom css -site.css -->
+    <link rel="stylesheet" href="~/css/site.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/AdminLTE/dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
@@ -50,7 +57,7 @@
         </div>
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light stcikyNavbar">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -61,16 +68,10 @@
 
                 </li>
                 
-                
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-
-
-
                 </li>
-
-
-
+                <!-- Login Logout button -->
                 <partial name="_LoginPartial" />
                 
             </ul>
@@ -78,14 +79,15 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
+                
                 <li class="nav-item">
                     <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                         <i class="fas fa-search"></i>
                     </a>
                     <div class="navbar-search-block">
-                        <form class="form-inline">
+                        <form class="form-inline" onsubmit="return false;">
                             <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                <input class="form-control form-control-navbar" id="navbarSearchInput" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" type="submit">
                                         <i class="fas fa-search"></i>
@@ -95,10 +97,11 @@
                                     </button>
                                 </div>
                             </div>
+                            <!-- Results will show here -->
+                            <ul id="searchResults"></ul>
                         </form>
                     </div>
                 </li>
-
                
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
@@ -205,7 +208,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Admins" asp-action="Index">
-                                <i class="nav-icon  fa fa-user-plus"></i> <p>
+                                <i class="nav-icon  fa fa-users"></i> <p>
                                     Add Users
                                     <span class="badge badge-info right">2</span>
                                 </p>
@@ -245,9 +248,22 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="VehicleDetection" asp-action="LiveCCTVStream" style="display: flex; align-items: center;">
+                                <div style="width: 24px; height: 24px; margin-right: 8px;">
+                                    <svg id="icon-cctv" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.051 60.051" width="24" height="24">
+                                        <path fill="#fff" d="M56.963 32.026H55.14a3.091 3.091 0 0 0-3.088 3.088v3.912h-10v-6.219c3.646-1.177 5.957-6.052 5.957-12.781 0-7.235-2.669-12.333-6.8-12.988a1.028 1.028 0 0 0-.157-.012h-40a1 1 0 0 0-.982.816H.069c-.02.107-.472 2.648 1.243 4.714 1.138 1.371 2.92 2.169 5.292 2.395a23.298 23.298 0 0 0-.552 5.075c0 7.29 3.075 13 7 13h21v12.967a3.036 3.036 0 0 0 3.033 3.033h1.935a3.03 3.03 0 0 0 2.84-2h10.193v2.912a3.091 3.091 0 0 0 3.088 3.088h1.823a3.091 3.091 0 0 0 3.088-3.088V35.114a3.093 3.093 0 0 0-3.089-3.088zM41.016 9.026c2.397.436 4.788 3.683 5.018 10h-20.52l-3.707-3.707a1 1 0 0 0-.707-.293h-7.404l-.029-.042a7.071 7.071 0 0 0-.34-.495c-.067-.09-.142-.18-.215-.27-.033-.041-.064-.082-.098-.123a7.743 7.743 0 0 0-.123-.141c-.044-.05-.08-.099-.125-.149-.017-.019-.039-.032-.058-.05a11.85 11.85 0 0 0-.593-.596 15.053 15.053 0 0 0-1.191-1.005c-.087-.067-.173-.134-.263-.201-1.513-1.131-3.265-2.134-4.846-2.928h35.201z" />
+                                        <circle class="led-blink-1" cx="28.051" cy="27.026" r="1" />
+                                        <circle class="led-blink-2" cx="24.051" cy="27.026" r="1" />
+                                    </svg>
+                                </div>
+                                <p>Live CCTV</p>
+                            </a>
+                        </li>
+
 
            
-                        
+                    
                         
                     </ul>
                 </nav>
@@ -304,6 +320,7 @@
     <!-- JQVMap -->
     <script src="~/AdminLTE/plugins/jqvmap/jquery.vmap.min.js"></script>
     <script src="~/AdminLTE/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <script src="~/Maps/lkmap.js"></script>
     <!-- jQuery Knob Chart -->
     <script src="~/AdminLTE/plugins/jquery-knob/jquery.knob.min.js"></script>
     <!-- daterangepicker -->
@@ -320,6 +337,8 @@
    
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/AdminLTE/dist/js/pages/dashboard.js"></script>
+    <!--Slecter 2  for searcheble Drop Down-->
+    <script src="~/js/select2.min.js"></script> 
     <!-- DataTables  & Plugins -->
     <script src="~/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="~/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -355,6 +374,35 @@
           });
         });
     </script>
+
+    //Search bar 
+    <script>
+        const input = document.getElementById("navbarSearchInput");
+        const results = document.getElementById("searchResults");
+
+        input.addEventListener("input", function () {
+            const query = input.value.trim();
+
+            if (query.length === 0) {
+                results.innerHTML = "";
+                return;
+            }
+
+            fetch(`/Home/SearchPages?query=${encodeURIComponent(query)}`)
+                .then(response => response.text())
+                .then(data => {
+                    results.innerHTML = data;
+                });
+        });
+
+        // Optional: Hide results on click outside
+        document.addEventListener("click", function (e) {
+            if (!e.target.closest(".navbar-search-block")) {
+                results.innerHTML = "";
+            }
+        });
+    </script>
+
     
 </body>
 </html>

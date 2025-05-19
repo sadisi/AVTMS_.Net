@@ -1,21 +1,113 @@
-﻿.account-container {
-    background-image: url('../iamges');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+﻿body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* serious gradient */
+
+}
+
+.account-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding:2rem 0;           
+    padding: 2rem;
 }
 
-.account-box{
-    background-color:#ffffff;
-    padding:30px;
-    border-radius:10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    max-width:500px;
-    width:100%;
-    opacity:.9;
+.account-box {
+    background: #fefefe;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    padding: 40px 30px;
+    max-width: 480px;
+    width: 100%;
+    border-top: 6px solid #003366; /* government blue */
 }
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+    .logo-container img {
+        max-width: 100px;
+    }
+
+h2 {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.form-control {
+    border-radius: 6px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+}
+
+    .form-control:focus {
+        border-color: #003366;
+        box-shadow: 0 0 5px rgba(0, 51, 102, 0.5);
+    }
+
+.btn-login {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    width: 100%;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-login:hover {
+        background-color: #001f4d;
+    }
+
+.form-check-label {
+    font-weight: 500;
+    color: #333;
+}
+
+.text-danger {
+    font-size: 0.875rem;
+}
+
+.text-link {
+    color: #003366;
+    text-decoration: none;
+}
+
+    .text-link:hover {
+        text-decoration: underline;
+    }
+
+@media (max-width: 480px) {
+    .account-box {
+        padding: 30px 20px;
+    }
+}
+
+
+/*Register page*/
+.register-button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    width: 100%;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+    .register-button:hover {
+        background-color: #001f4d;
+    }

@@ -1,0 +1,224 @@
+﻿@{
+    ViewData["Title"] = "CCTV Monitoring";
+}
+
+<!-- CCTV CONTROL PANEL -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card shadow rounded">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0 d-flex align-items-center">
+                    <svg id="icon-cctv" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.051 60.051" width="25" height="25" style="margin-right: 8px;">
+                        <path fill="#fff" d="M56.963 32.026H55.14a3.091 3.091 0 0 0-3.088 3.088v3.912h-10v-6.219c3.646-1.177 5.957-6.052 5.957-12.781 0-7.235-2.669-12.333-6.8-12.988a1.028 1.028 0 0 0-.157-.012h-40a1 1 0 0 0-.982.816H.069c-.02.107-.472 2.648 1.243 4.714 1.138 1.371 2.92 2.169 5.292 2.395a23.298 23.298 0 0 0-.552 5.075c0 7.29 3.075 13 7 13h21v12.967a3.036 3.036 0 0 0 3.033 3.033h1.935a3.03 3.03 0 0 0 2.84-2h10.193v2.912a3.091 3.091 0 0 0 3.088 3.088h1.823a3.091 3.091 0 0 0 3.088-3.088V35.114a3.093 3.093 0 0 0-3.089-3.088zM41.016 9.026c2.397.436 4.788 3.683 5.018 10h-20.52l-3.707-3.707a1 1 0 0 0-.707-.293h-7.404l-.029-.042a7.071 7.071 0 0 0-.34-.495c-.067-.09-.142-.18-.215-.27-.033-.041-.064-.082-.098-.123a7.743 7.743 0 0 0-.123-.141c-.044-.05-.08-.099-.125-.149-.017-.019-.039-.032-.058-.05a11.85 11.85 0 0 0-.593-.596 15.053 15.053 0 0 0-1.191-1.005c-.087-.067-.173-.134-.263-.201-1.513-1.131-3.265-2.134-4.846-2.928h35.201z" />
+                        <circle class="led-blink-1" cx="28.051" cy="27.026" r="1" />
+                        <circle class="led-blink-2" cx="24.051" cy="27.026" r="1" />
+                    </svg>
+                    CCTV Camera Stream Panel
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+                <div class="row g-3">
+                    <!-- Province -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="province" class="fw-bold">Province</label>
+                            <select id="province" class="form-control" onchange="populateDistricts()">
+                                <option value="">-- Select Province --</option>
+                                <option value="western">Western Province</option>
+                                <option value="central">Central Province</option>
+                                <option value="eastern">Eastern Province</option>
+                                <option value="northern">Northern Province</option>
+                                <option value="northCentral">North Central Province</option>
+                                <option value="northWestern">North Western Province</option>
+                                <option value="sabaragamuwa">Sabaragamuwa Province</option>
+                                <option value="southern">Southern Province</option>
+                                <option value="uva">Uva Province</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- District -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="district" class="fw-bold">District</label>
+                            <select id="district" class="form-control" onchange="renderCameras()">
+                                <option value="">-- Select District --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Root -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Root" class="fw-bold">Root</label>
+                            <select id="Root" class="form-control" onchange="renderCameras()">
+                                <option value="">-- Select Root --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Number of Cameras -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cameraCount" class="fw-bold">Number of Cameras</label>
+                            <select id="cameraCount" class="form-control" onchange="renderCameras()">
+                                <option value="1">1 Camera</option>
+                                <option value="2">2 Cameras</option>
+                                <option value="4">4 Cameras</option>
+                                <option value="6" selected>6 Cameras</option>
+                                <option value="8">8 Cameras</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- Camera Display Area -->
+                <div class="camera-display-section">
+                    <h6 class="fw-bold">Live Stream</h6>
+                    <div id="noStreamLabel" class="alert alert-warning text-center fw-bold" ">
+                            🚫 No CCTV Streams Available
+                        </div>
+                    <div id="cameraContainer" class="camera-grid mt-3 p-2 border rounded bg-light">
+                        <!-- Cameras will load here -->
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const districtOptions = {
+        central: ['Kandy', 'Matale', 'Nuwara Eliya'],
+        eastern: ['Ampara', 'Batticaloa', 'Trincomalee'],
+        northern: ['Jaffna', 'Kilinochchi', 'Mannar', 'Mullaitivu', 'Vavuniya'],
+        northCentral: ['Anuradhapura', 'Polonnaruwa'],
+        northWestern: ['Kurunegala', 'Puttalam'],
+        sabaragamuwa: ['Kegalle', 'Ratnapura'],
+        southern: ['Galle', 'Matara', 'Hambantota'],
+        uva: ['Badulla', 'Monaragala'],
+        western: ['Colombo', 'Gampaha', 'Kalutara']
+    };
+
+    const rootOptions = {
+        colombo: [
+            'Colombo 01 – Fort', 'Colombo 02 – Slave Island', 'Colombo 03 – Kollupitiya',
+            'Colombo 04 – Bambalapitiya', 'Colombo 05 – Havelock Town', 'Colombo 06 – Wellawatte',
+            'Colombo 07 – Cinnamon Gardens', 'Colombo 08 – Borella', 'Colombo 09 – Dematagoda',
+            'Colombo 10 – Maradana', 'Colombo 11 – Pettah', 'Colombo 12 – Hulftsdorp',
+            'Colombo 13 – Kotahena', 'Colombo 14 – Grandpass', 'Colombo 15 – Modara / Mutwal',
+            'Kottawa', 'Homagama', 'Rajagiriya', 'Kaduwela', 'Dehiwala', 'Mount Lavinia', 'Nugegoda'
+        ]
+        // Add more districts as needed
+    };
+
+    const cameraStreams = {
+        central: {
+            kandy: ['/CCTVvid/cctv1.mp4', '/CCTVvid/cctv1.mp4', '/CCTVvid/cctv1.mp4', '/CCTVvid/cctv1.mp4'],
+            matale: ['/CCTVvid/cctv1.mp4', '/CCTVvid/cctv1.mp4'],
+            'nuwara eliya': ['/CCTVvid/cctv1.mp4']
+        },
+        western: {
+            colombo: ['/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4', '/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4'],
+            gampaha: ['/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4', '/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4'],
+            kalutara: ['/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4', '/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4']
+        },
+        southern: {
+            galle: ['/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4', '/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4'],
+            matara: ['/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4', '/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4'],
+            hambantota: ['/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4', '/CCTVvid/cctv1.mp4', '/CCTVvid/cctv2.mp4']
+        }
+    };
+
+    function populateDistricts() {
+        const province = document.getElementById("province").value;
+        const districtSelect = document.getElementById("district");
+        const rootSelect = document.getElementById("Root");
+
+        districtSelect.innerHTML = "<option value=''>-- Select District --</option>";
+        rootSelect.innerHTML = "<option value=''>-- Select Root --</option>";
+
+        if (districtOptions[province]) {
+            districtOptions[province].forEach(d => {
+                const option = document.createElement("option");
+                option.value = d.toLowerCase();
+                option.textContent = d;
+                districtSelect.appendChild(option);
+            });
+        }
+
+        renderCameras(); // Reset camera view when province changes
+    }
+
+    function populateRoots() {
+        const district = document.getElementById("district").value;
+        const rootSelect = document.getElementById("Root");
+
+        rootSelect.innerHTML = "<option value=''>-- Select Root --</option>";
+
+        if (rootOptions[district]) {
+            rootOptions[district].forEach(r => {
+                const option = document.createElement("option");
+                option.value = r;
+                option.textContent = r;
+                rootSelect.appendChild(option);
+            });
+        }
+
+        renderCameras(); // Optional: auto-update stream view when roots change
+    }
+
+    function renderCameras() {
+        const province = document.getElementById("province").value;
+        const district = document.getElementById("district").value;
+        const count = parseInt(document.getElementById("cameraCount").value) || 0;
+        const container = document.getElementById("cameraContainer");
+        const noStreamLabel = document.getElementById("noStreamLabel");
+
+        container.innerHTML = "";
+        let streams = [];
+
+        // Prefer exact match for district
+        if (cameraStreams[province]) {
+            if (cameraStreams[province][district]) {
+                streams = cameraStreams[province][district];
+            } else {
+                // Fallback: combine all streams in the province
+                streams = Object.values(cameraStreams[province]).flat();
+            }
+        }
+
+        // Show or hide the no-stream label
+        if (streams.length === 0) {
+            noStreamLabel.style.display = "block";
+        } else {
+            noStreamLabel.style.display = "none";
+        }
+
+        // Render selected number of cameras
+        for (let i = 0; i < count; i++) {
+            const video = document.createElement("video");
+            video.controls = true;
+            video.autoplay = true;
+            video.muted = true;
+            video.className = "camera-stream";
+            video.src = streams[i] || "";
+            container.appendChild(video);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("district").addEventListener("change", populateRoots);
+        document.getElementById("province").addEventListener("change", populateDistricts);
+        document.getElementById("cameraCount").addEventListener("change", renderCameras);
+    });
+</script>
+
+

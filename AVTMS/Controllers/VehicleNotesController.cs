@@ -48,13 +48,24 @@ namespace AVTMS.Controllers
         // GET: VehicleNotes/Create
         public IActionResult Create()
         {
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate");
+            //ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate");
+
+            //get numberplate number with vehicle model
+            ViewData["VehicleId"] = new SelectList(
+    _context.Vehicles.Select(v => new
+    {
+        v.Id,
+        DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
+    }),
+    "Id",
+    "DisplayName"
+);
+
             return View();
         }
 
         // POST: VehicleNotes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(VehicleNotes vehicleNotes)
@@ -67,7 +78,20 @@ namespace AVTMS.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate", vehicleNotes.VehicleId);
+            //  ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate", vehicleNotes.VehicleId);
+
+            //disply numberplate number with vehicle model
+            ViewData["VehicleId"] = new SelectList(
+      _context.Vehicles.Select(v => new
+      {
+          v.Id,
+          DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
+      }),
+      "Id",
+      "DisplayName",
+      vehicleNotes.VehicleId
+  );
+
             return View(vehicleNotes);
         }
 
@@ -84,13 +108,26 @@ namespace AVTMS.Controllers
             {
                 return NotFound();
             }
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate", vehicleNotes.VehicleId);
+            //ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate", vehicleNotes.VehicleId);
+
+
+            //get numberplate number with vehicle model
+            ViewData["VehicleId"] = new SelectList(
+            _context.Vehicles.Select(v => new
+                     {
+                         v.Id,
+                         DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
+                      }),
+                             "Id",
+                             "DisplayName",
+                             vehicleNotes.VehicleId
+                         );
+
             return View(vehicleNotes);
         }
 
         // POST: VehicleNotes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, VehicleNotes vehicleNotes)
@@ -122,7 +159,20 @@ namespace AVTMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate", vehicleNotes.VehicleId);
+            // ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate", vehicleNotes.VehicleId);
+
+            //disply numberplate number with vehicle model
+            ViewData["VehicleId"] = new SelectList(
+                  _context.Vehicles.Select(v => new
+                    {
+                         v.Id,
+                         DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
+                     }),
+                              "Id",
+                               "DisplayName",
+                              vehicleNotes.VehicleId
+                    );
+
             return View(vehicleNotes);
         }
 

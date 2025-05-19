@@ -414,5 +414,21 @@ namespace AVTMS.Controllers
         {
             return _context.Vehicles.Any(e => e.Id == id);
         }
+
+
+        //Serch vehicle add using NIC
+        [HttpGet]
+        [Route("Vehicles/SearchNICs")]
+        public JsonResult SearchNICs(string term)
+        {
+            var nics = _context.VehicleOwner
+                .Where(v => v.NIC.Contains(term))
+                .Select(v => new { id = v.NIC, text = v.NIC })
+                .ToList();
+
+            return Json(nics);
+        }
+
+
     }
 }

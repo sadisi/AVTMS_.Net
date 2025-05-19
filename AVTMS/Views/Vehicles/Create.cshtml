@@ -51,10 +51,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="VehicleOwnerNIC" class="control-label"></label>
-                        <select asp-for="VehicleOwnerNIC" class="form-control" asp-items="ViewBag.VehicleOwnerNIC"></select>
+                        <label for="VehicleOwnerNIC" class="control-label">Vehicle Owner NIC</label>
+                        <select id="VehicleOwnerNIC" plqceholder="Search Vehicle Owner NIC..."  name="VehicleOwnerNIC" class="form-control" style="width:100%" >
+                            <option value="">Search NIC...</option>
+                        </select>
                     </div>
                 </div>
+
             </div>
 
             <hr />
@@ -91,4 +94,31 @@
             }
         });
     </script>
+
+    //select2 -- Vehicle owner NiC serach area
+    <script>
+        $(document).ready(function () {
+            $('#VehicleOwnerNIC').select2({
+                placeholder: "Search Vehicle Owner NIC...",
+                minimumInputLength: 1,
+                ajax: {
+                    url: '/Vehicles/SearchNICs',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            term: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
+    </script>
+
 }

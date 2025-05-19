@@ -4,6 +4,7 @@ using AVTMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AVTMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250503213056_added ditected vehicles db")]
+    partial class addedditectedvehiclesdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -374,31 +377,6 @@ namespace AVTMS.Migrations
                     b.HasIndex("VehicleOwnerNIC");
 
                     b.ToTable("Vehicles");
-                });
-
-            modelBuilder.Entity("AVTMS.Models.VehicleDetect", b =>
-                {
-                    b.Property<int>("DetectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DetectId"));
-
-                    b.Property<string>("end_time")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("license_plate")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("start_time")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("DetectId");
-
-                    b.ToTable("VehicleDetects");
                 });
 
             modelBuilder.Entity("AVTMS.Models.VehicleNotes", b =>

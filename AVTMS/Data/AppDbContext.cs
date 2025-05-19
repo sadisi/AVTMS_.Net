@@ -20,5 +20,6 @@ namespace AVTMS.Data
         public DbSet<AVTMS.Models.VehicleOwner> VehicleOwner { get; set; } = default!;
         public DbSet<AVTMS.Models.VehicleNotes> VehicleNotes { get; set; } = default!;
         public DbSet<AVTMS.Models.DetectedVehicle> DetectedVehicle { get; set; } = default!;
+        public DbSet<AVTMS.Models.VehicleDetect> VehicleDetects { get; set; } = default!;
     }
 }

@@ -1,60 +1,136 @@
-﻿@{
+﻿@model List<AVTMS.Models.VehicleDetect>
+
+
+@{
     ViewData["Title"] = "Upload Vehicle Video";
 }
 
-<h2 class="text-2xl font-semibold mb-4">Upload Vehicle Footage</h2>
+<!-- Vehicle Footage Upload Panel -->
+<div class="row mt-4">
+    <div class="col-md-10 offset-md-1">
+        <div class="card shadow rounded">
+            <div class="card-header bg-primary text-white d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#fff" class="bi bi-upload me-2" viewBox="0 0 16 16">
+                    <path d="M.5 9.9V14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V9.9a.5.5 0 0 0-1 0V14H1V9.9a.5.5 0 0 0-1 0z" />
+                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1-.708.708L8.5 2.707V10.5a.5.5 0 0 1-1 0V2.707L4.354 5.854a.5.5 0 1 1-.708-.708l4-4z" />
+                </svg>
+                <h5 class="mb-0">Upload Vehicle Footage</h5>
+            </div>
 
-@if (TempData["Success"] != null)
-{
-    <div class="bg-green-100 text-green-800 p-2 rounded mb-3">
-        @TempData["Success"]
+            <div class="card-body">
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["Success"]
+                    </div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["Error"]</div>
+                }
+
+
+                <form asp-controller="VehicleDetection"
+                      asp-action="UploadVideo"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <div class="mb-3">
+                        <label for="videoFile" class="form-label fw-bold">Select Video File</label>
+                        <input type="file"
+                               class="form-control"
+                               id="videoFile"
+                               name="videoFile"
+                               accept="video/*"
+                               required
+                               onchange="previewVideo()" />
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary w-100 fw-semibold">
+                            Detect Number Plates
+                        </button>
+                    </div>
+                </form>
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger mt-4">
+                        <ul class="mb-0">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <!-- Live Preview -->
+                <div id="livePreview" class="mt-5 d-none">
+                    <h6 class="fw-bold mb-2">Live Video Preview</h6>
+                    <hr />
+                    <video id="videoPreview" width="100%" height="auto" controls class="rounded shadow border"></video>
+                </div>
+
+                <!-- Uploaded Preview -->
+                @if (TempData["VideoPath"] != null)
+                {
+                    <div class="mt-5">
+                        <h6 class="fw-bold mb-2">Uploaded Video Preview</h6>
+                        <hr />
+                        <video width="100%" height="auto" controls class="rounded shadow border">
+                            <source src="@TempData["VideoPath"]" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
-}
+</div>
 
-<form asp-controller="VehicleDetection"
-      asp-action="UploadVideo"
-      method="post"
-      enctype="multipart/form-data"
-      class="space-y-4">
 
-    <div>
-        <label for="videoFile" class="block font-medium mb-1">Select Video File</label>
-        <input type="file"
-               name="videoFile"
-               id="videoFile"
-               accept="video/*"
-               class="block w-full border rounded px-3 py-2"
-               required />
-    </div>
+<!--Results-->
 
-    <div>
-        <button type="submit"
-                class="text-white px-4 py-2 rounded bg-blue-600 hover:bg-blue-800">
-            Upload & Detect
-        </button>
-    </div>
-</form>
+<h2>Detected Vehicles</h2>
 
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="mt-4 text-red-500">
-        <ul>
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-            {
-                <li>@error.ErrorMessage</li>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Detect ID</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>License Plate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var detect in Model)
+        {
+            <tr>
+                <td>@detect.DetectId</td>
+                <td>@detect.start_time</td>
+                <td>@detect.end_time</td>
+                <td>@detect.license_plate</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@section Scripts {
+    <script>
+        function previewVideo() {
+            const fileInput = document.getElementById('videoFile');
+            const video = document.getElementById('videoPreview');
+            const previewContainer = document.getElementById('livePreview');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const url = URL.createObjectURL(file);
+                video.src = url;
+                previewContainer.classList.remove('d-none');
             }
-        </ul>
-    </div>
+        }
+    </script>
 }
-
-@if (TempData["VideoPath"] != null)
-{
-    <div class="mt-6">
-        <h3 class="text-lg font-semibold mb-2">Uploaded Video Preview</h3>
-        <video width="640" height="360" controls class="rounded shadow">
-            <source src="@TempData["VideoPath"]" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-}
-

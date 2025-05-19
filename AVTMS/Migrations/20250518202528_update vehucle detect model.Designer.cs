@@ -4,6 +4,7 @@ using AVTMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AVTMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250518202528_update vehucle detect model")]
+    partial class updatevehucledetectmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -384,17 +387,14 @@ namespace AVTMS.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DetectId"));
 
-                    b.Property<string>("end_time")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("end_time")
+                        .HasColumnType("int");
 
-                    b.Property<string>("license_plate")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("license_plate")
+                        .HasColumnType("int");
 
-                    b.Property<string>("start_time")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("start_time")
+                        .HasColumnType("int");
 
                     b.HasKey("DetectId");
 

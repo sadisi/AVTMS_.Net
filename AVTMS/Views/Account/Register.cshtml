@@ -10,13 +10,17 @@
 
 <div class="account-container">
     <div class="account-box">
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="/AdminLTE/dist/img/credit/logLogo.png" alt="Government Logo" />
+        </div>
         <h2 class="text-center mb-4">Register</h2>
         <form asp-action="Register" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
-                <label asp-for="UserType" class="form-label"></label>
+                <label asp-for="UserType" class="form-label">Type of User</label>
                 <select asp-for="UserType" class="form-select">
-                    <option value="">-- Select User Type --</option>
+                    <option value="">Select User Type </option>
                     <option value="Admin">Admin</option>
                     <option value="Base User">Base User</option>
                     <option value="Authorized User">Authorized User</option>
@@ -25,32 +29,36 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Name" class="form-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" placeholder="Enter your name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control"/>
+                <input asp-for="Email" class="form-control" placeholder="Enter your email"/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Password" class="form-label"></label>
-                <input asp-for="Password" class="form-control"/>
+                <input asp-for="Password" class="form-control" placeholder="Enter your password"/>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="ConfirmPassword" class="form-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
+                <label asp-for="ConfirmPassword" class="form-label"> Confirm Password</label>
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="mb-3 text-end">
+                <a asp-controller="Home" asp-action="Privacy" class="text-link">Terms and Conditions</a>
+            </div>
+         
            
-            <input type="submit" value="Register" class="btn btn-success w-100 p-2"/>
+            <input type="submit" value="Register" class="register-button w-100 p-2" />
             <p class="text-center mt-2">
                 Already have an account? <a asp-controller="Account" asp-action="Login" class="text-decoration-none">Login</a>
             </p>
 
             <div class="text-center">
-                <a asp-controller="Home" asp-action="Index" class="text-decoration-none mt-3">Back</a>
+                <a asp-controller="Account" asp-action="Login" class="text-decoration-none mt-3">Back</a>
             </div>
         </form>
 

@@ -12,7 +12,7 @@ namespace AVTMS.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger , AppDbContext context)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -47,6 +47,65 @@ namespace AVTMS.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+
+        //Search bar 
+        private readonly List<(string Title, string Url)> _pages = new List<(string, string)>
+    {
+        //HomePage related
+        ("Home", "/Home/Index"),
+        ("Contact", "/Home/Contact"),
+        ("Privacy", "/Home/Privacy"),
+
+        //Registered User related
+        ("Registered Users", "/Account/RegisteredUsers"),
+        ("Edit Registered Users", "/Account/EditUser"),
+       
+         //Base User related
+        ("Base Users", "/BaseUsers/Index"),
+        ("Add Base Users", "/BaseUsers/Create"),
+
+        //Authorized User related
+        ("Authorized Users", "/AuthUsers/Index"),
+        ("Add Authorized Users", "/AuthUsers/Create"),
+
+        //Vehicle related
+        ("Vehicles", "/Vehicles/Index"),
+        ("Add Vehicles", "/Vehicles/Create"),
+
+        //Admin related
+        ("Admin", "/Admins/Index"),
+
+        //Vehicle Owner related
+        ("Vehicle Owners", "/VehicleOwners/Index"),
+        ("Add Vehicle Owners", "/VehicleOwners/Create"),
+
+        //Vehicle Detection related
+        ("Vehicles Detection", "/VehicleDetection/Upload"),
+
+        //Vehicle Notes related
+        ("Vehicle Notes", "/VehicleNotes/Index"),
+        ("Add Vehicle Notes", "/VehicleNotes/Create"),
+
+    };
+
+        [HttpGet]
+        public IActionResult SearchPages(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+                return Content("");
+
+            var matches = _pages
+                .Where(p => p.Title.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .Select(p => $"<li class='list-group-item'><a href='{p.Url}'>{p.Title}</a></li>")
+                .ToList();
+
+            if (matches.Count == 0)
+                return Content("<li class='list-group-item'>No results found</li>");
+
+            return Content(string.Join("", matches));
         }
     }
 }

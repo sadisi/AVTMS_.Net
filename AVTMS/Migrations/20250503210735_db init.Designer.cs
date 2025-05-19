@@ -4,6 +4,7 @@ using AVTMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AVTMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250503210735_db init")]
+    partial class dbinit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,8 +70,7 @@ namespace AVTMS.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("varchar(40)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -135,8 +137,7 @@ namespace AVTMS.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("varchar(40)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -203,8 +204,7 @@ namespace AVTMS.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("varchar(40)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -224,34 +224,6 @@ namespace AVTMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BaseUser");
-                });
-
-            modelBuilder.Entity("AVTMS.Models.DetectedVehicle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DetectedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NumberPlate")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("VideoFileName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("VideoPath")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DetectedVehicle");
                 });
 
             modelBuilder.Entity("AVTMS.Models.Users", b =>
@@ -340,9 +312,6 @@ namespace AVTMS.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
 
@@ -376,31 +345,6 @@ namespace AVTMS.Migrations
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("AVTMS.Models.VehicleDetect", b =>
-                {
-                    b.Property<int>("DetectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DetectId"));
-
-                    b.Property<string>("end_time")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("license_plate")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("start_time")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("DetectId");
-
-                    b.ToTable("VehicleDetects");
-                });
-
             modelBuilder.Entity("AVTMS.Models.VehicleNotes", b =>
                 {
                     b.Property<int>("Id")
@@ -422,7 +366,6 @@ namespace AVTMS.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("NoteContent")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("VehicleId")

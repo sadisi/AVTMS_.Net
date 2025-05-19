@@ -2,6 +2,7 @@
 using AVTMS.Data;
 using AVTMS.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -21,11 +22,15 @@ namespace AVTMS.Controllers
             _logger = logger;
         }
 
-        public IActionResult Upload()
+        public async Task<IActionResult> Upload()
         {
-            return View();
+            var detections = await _context.VehicleDetects.ToListAsync();
+            return View(detections);
+            //return View();
+
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> UploadVideo(IFormFile videoFile)
         {
@@ -42,12 +47,9 @@ namespace AVTMS.Controllers
                     await videoFile.CopyToAsync(fileStream);
                 }
 
-                // Now invoke the Python script with the video path
                 var psi = new ProcessStartInfo
                 {
-                     //FileName = "python",
-                   FileName = @"D:\etc\Python\VehicleTrack\vehicleNumberPlateTrack\.venv\Scripts\python.exe",
-
+                    FileName = @"D:\etc\Python\VehicleTrack\vehicleNumberPlateTrack\.venv\Scripts\python.exe",
                     Arguments = $"avtms.py \"{filePath}\"",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -55,26 +57,46 @@ namespace AVTMS.Controllers
                     CreateNoWindow = true,
                     WorkingDirectory = "D:\\etc\\Python\\VehicleTrack\\vehicleNumberPlateTrack\\yolov10"
                 };
-                // Add this for debugging
+
+                //pass python console out put to upload page
+
                 TempData["Success"] = $"Running Python with: {psi.FileName} {psi.Arguments}";
 
-                var process = new Process { StartInfo = psi };
-                process.Start();
+                try
+                {
+                    var process = new Process { StartInfo = psi };
+                    process.Start();
 
-                string output = await process.StandardOutput.ReadToEndAsync();
-                string errors = await process.StandardError.ReadToEndAsync();
-                process.WaitForExit();
+                    string output = await process.StandardOutput.ReadToEndAsync();
+                    string errors = await process.StandardError.ReadToEndAsync();
 
-                TempData["Success"] += $"<br/>Output: {output}<br/>Errors: {errors}";
-                TempData["VideoPath"] = "/uploads/" + fileName;
+                    await process.WaitForExitAsync();
+
+                    TempData["Success"] += $"<br/>Output: {output}<br/>Errors: {errors}";
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error running Python script");
+                    TempData["Error"] = "There was a problem processing your video. Please check the server logs.";
+                }
+
+                //new
+                var detectedVehicles = _context.VehicleDetects
+    .OrderByDescending(v => v.DetectId)
+    .Take(10) // Optional: just show latest 10
+    .ToList();
+
+                return View("Upload", detectedVehicles);
+
+                //
 
                 return RedirectToAction("Upload");
-
             }
 
             ModelState.AddModelError("", "Please upload a valid video file.");
             return View("Upload");
         }
+
 
 
         /*  private async Task<DetectionResult> SendVideoToYoloApi(string filePath)
@@ -111,6 +133,12 @@ namespace AVTMS.Controllers
                    return null;
                }
            }*/
+
+
+        public IActionResult LiveCCTVStream()
+        {
+            return View();
+        }
 
         public class DetectionResult
         {
