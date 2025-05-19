@@ -4,11 +4,18 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Vehicle Onwes List</h1>
+<div class="card shadow-sm mt-3 mb-4">
+    <div class="card-body d-flex justify-content-between align-items-center">
+        <h1 class="card-title mb-0 text-secondary fw-bold">
+            <i class="fa fa-users mr-2" aria-hidden="true"></i>Registered Vehicle Owners 
+        </h1>
+        <a asp-action="Create" class="btn btn-primary btn-md d-flex align-items-center shadow-sm">
+            <i class="fa fa-plus mr-2"></i> Register New Vehicle Owner
+        </a>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New Vehicle Owner</a>
-</p>
+
 <div class="card">
     <div class="card-header">
         

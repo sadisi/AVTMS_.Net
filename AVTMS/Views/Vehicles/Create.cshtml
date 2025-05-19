@@ -24,14 +24,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VehicleNumberPlate" class="control-label"></label>
-                        <input asp-for="VehicleNumberPlate" class="form-control" />
+                        <input asp-for="VehicleNumberPlate" class="form-control" required/>
                         <span asp-validation-for="VehicleNumberPlate" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VehicleModel" class="control-label"></label>
-                        <input asp-for="VehicleModel" class="form-control" />
+                        <input asp-for="VehicleModel" class="form-control" required />
                         <span asp-validation-for="VehicleModel" class="text-danger"></span>
                     </div>
                 </div>
@@ -45,14 +45,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VehicleNote" class="control-label"></label>
-                        <input asp-for="VehicleNote" class="form-control" />
+                        <input asp-for="VehicleNote" class="form-control" required />
                         <span asp-validation-for="VehicleNote" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="VehicleOwnerNIC" class="control-label">Vehicle Owner NIC</label>
-                        <select id="VehicleOwnerNIC" plqceholder="Search Vehicle Owner NIC..."  name="VehicleOwnerNIC" class="form-control" style="width:100%" >
+                        <select id="VehicleOwnerNIC" plqceholder="Search Vehicle Owner NIC..." name="VehicleOwnerNIC" class="form-control" style="width:100%" required>
                             <option value="">Search NIC...</option>
                         </select>
                     </div>
@@ -95,7 +95,9 @@
         });
     </script>
 
-    //select2 -- Vehicle owner NiC serach area
+        <!-- Vehicle owner NiC serach area--->
+
+    
     <script>
         $(document).ready(function () {
             $('#VehicleOwnerNIC').select2({

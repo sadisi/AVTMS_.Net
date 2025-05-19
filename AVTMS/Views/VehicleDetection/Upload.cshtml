@@ -1,9 +1,26 @@
 ﻿@model List<AVTMS.Models.VehicleDetect>
 
-
 @{
     ViewData["Title"] = "Upload Vehicle Video";
 }
+
+<!--Truncate python console output from success message-->
+@{
+    var successMessage = TempData["Success"]?.ToString();
+    var truncatedMessage = successMessage?.Length > 200 ? successMessage.Substring(0, 200) + "..." : successMessage;
+}
+
+<!--Model button for vehicle details only avaoilable deatails exist in db-->
+
+@if (Model != null && Model.Any())
+{
+    <div class="text-end mb-3 me-5">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicleMatchModal">
+            Show Matched Vehicle Details
+        </button>
+    </div>
+}
+
 
 <!-- Vehicle Footage Upload Panel -->
 <div class="row mt-4">
@@ -21,14 +38,13 @@
                 @if (TempData["Success"] != null)
                 {
                     <div class="alert alert-success">
-                        @TempData["Success"]
+                        @Html.Raw(truncatedMessage)
                     </div>
                 }
                 @if (TempData["Error"] != null)
                 {
                     <div class="alert alert-danger">@TempData["Error"]</div>
                 }
-
 
                 <form asp-controller="VehicleDetection"
                       asp-action="UploadVideo"
@@ -47,7 +63,7 @@
                     </div>
 
                     <div class="mt-4">
-                        <button type="submit" class="btn btn-primary w-100 fw-semibold">
+                        <button type="submit" class="btn btn-primary w-100 fw-semibold deffect">
                             Detect Number Plates
                         </button>
                     </div>
@@ -89,33 +105,40 @@
     </div>
 </div>
 
+<!-- Detected Vehicles Table -->
+<!-- Detected Vehicles Table -->
+<h2 class="mt-5">Detected Vehicles</h2>
 
-<!--Results-->
-
-<h2>Detected Vehicles</h2>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Detect ID</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>License Plate</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var detect in Model)
-        {
-            <tr>
-                <td>@detect.DetectId</td>
-                <td>@detect.start_time</td>
-                <td>@detect.end_time</td>
-                <td>@detect.license_plate</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
+<div class="card shadow rounded">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Detection Results</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-hover table-bordered table-striped w-100">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Detect ID</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>License Plate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detect in Model)
+                    {
+                        <tr>
+                            <td>@detect.DetectId</td>
+                            <td>@detect.start_time</td>
+                            <td>@detect.end_time</td>
+                            <td>@detect.license_plate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 
 @section Scripts {
@@ -132,5 +155,9 @@
                 previewContainer.classList.remove('d-none');
             }
         }
+
+      
+
     </script>
+
 }

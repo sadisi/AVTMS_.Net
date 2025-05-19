@@ -30,7 +30,7 @@ namespace AVTMS.Controllers
 
         }
 
-        
+
         [HttpPost]
         public async Task<IActionResult> UploadVideo(IFormFile videoFile)
         {
@@ -47,6 +47,10 @@ namespace AVTMS.Controllers
                     await videoFile.CopyToAsync(fileStream);
                 }
 
+                // Set TempData with relative path for video preview
+                TempData["VideoPath"] = "/uploads/" + fileName;
+
+                // Run python process as before...
                 var psi = new ProcessStartInfo
                 {
                     FileName = @"D:\etc\Python\VehicleTrack\vehicleNumberPlateTrack\.venv\Scripts\python.exe",
@@ -82,9 +86,9 @@ namespace AVTMS.Controllers
 
                 //new
                 var detectedVehicles = _context.VehicleDetects
-    .OrderByDescending(v => v.DetectId)
-    .Take(10) // Optional: just show latest 10
-    .ToList();
+                .OrderByDescending(v => v.DetectId)
+                .Take(10) // Optional: just show latest 10
+                .ToList();
 
                 return View("Upload", detectedVehicles);
 

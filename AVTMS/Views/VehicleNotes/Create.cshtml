@@ -24,6 +24,16 @@
                 <label asp-for="VehicleId" class="control-label"></label>
                 <select asp-for="VehicleId" class ="form-control" asp-items="ViewBag.VehicleId"></select>
             </div>
+            <div class="accent-blue">
+                <div class="form-group">
+                    <label asp-for="VehicleId" class="control-label">See in Here Registered Vehicles </label>
+                    <select asp-for="VehicleId" class="form-control" asp-items="ViewBag.VehicleId">
+                        <option value="">Select a Vehicle...</option>
+                    </select>
+                </div>
+            </div>
+
+
          <hr />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary btn-block" />
@@ -43,4 +53,30 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <!--Vehicle Number plate Search-->
+    <script>
+        $(document).ready(function () {
+            $('#VehicleId').select2({
+                placeholder: "Search Vehicle by Number Plate...",
+                minimumInputLength: 1,
+                ajax: {
+                    url: '/VehicleNotes/SearchVehicleNumberPlates', // url of the action came from vehiclenotes controller line 233
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            term: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
+    </script>
 }

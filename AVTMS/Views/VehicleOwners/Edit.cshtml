@@ -4,47 +4,69 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="card shadow-sm mb-2 mt-5">
+    <div class="card-body">
+        <h4 class=" mt-2  mb-2 text-center">
+            <i class="fas fa-edit me-2 text-primary mr-2"></i>Edit Vehicle Owner Details
+        </h4>
 
-<h4>VehicleOwner</h4>
+    </div>
+</div>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<h5 class="mb-4 mt-3 text-primary fw-semibold border-bottom pb-2 text-muted text-center text-bold ">
+    <i class="fas fa-id-card mr-2"></i>
+      Owner NIC :  @Model.NIC
+    </h5>
+
+<hr />
+<div class="row mt-4 card shadow-sm rounded-3 mt-2 mb-2 pt-2 pb-2">
+    <div class="col-md-12 ">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             <input type="hidden" asp-for="NIC" />
-            <div class="form-group">
-                <label asp-for="OwnerName" class="control-label"></label>
-                <input asp-for="OwnerName" class="form-control" />
-                <span asp-validation-for="OwnerName" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="OwnerName" class="control-label"></label>
+                        <input asp-for="OwnerName" class="form-control" />
+                        <span asp-validation-for="OwnerName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="OwnerMobileNumber" class="control-label"></label>
+                        <input asp-for="OwnerMobileNumber" class="form-control" />
+                        <span asp-validation-for="OwnerMobileNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="OwnerEmail" class="control-label"></label>
+                        <input asp-for="OwnerEmail" class="form-control" />
+                        <span asp-validation-for="OwnerEmail" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="OwnerAddress" class="control-label"></label>
+                        <input asp-for="OwnerAddress" class="form-control" />
+                        <span asp-validation-for="OwnerAddress" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="OwnerMobileNumber" class="control-label"></label>
-                <input asp-for="OwnerMobileNumber" class="form-control" />
-                <span asp-validation-for="OwnerMobileNumber" class="text-danger"></span>
+            <hr />
+            <div class="form-group mt-10 mb-3">
+                <input type="submit" value="Save" class="btn btn-primary btn-block" />
             </div>
-            <div class="form-group">
-                <label asp-for="OwnerEmail" class="control-label"></label>
-                <input asp-for="OwnerEmail" class="form-control" />
-                <span asp-validation-for="OwnerEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OwnerAddress" class="control-label"></label>
-                <input asp-for="OwnerAddress" class="form-control" />
-                <span asp-validation-for="OwnerAddress" class="text-danger"></span>
-            </div>
-           
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group mt-10 mb-3">
+                <a asp-action="Index" class="btn btn-outline-secondary btn-block">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

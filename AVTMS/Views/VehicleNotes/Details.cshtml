@@ -1,54 +1,65 @@
 ﻿@model AVTMS.Models.VehicleNotes
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Note Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
+    <h1 class="text-primary mb-4">
+        <i class="fa fa-sticky-note"></i> Vehicle Note Details
+    </h1>
 
-<div>
-    <h4>VehicleNotes</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NoteContent)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NoteContent)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Vehicle)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Vehicle.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedByID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedByID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedOn)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <tbody>
+                    <tr>
+                        <th>Note Content</th>
+                        <td>@Html.DisplayFor(model => model.NoteContent)</td>
+                    </tr>
+                    <tr>
+                        <th>Vehicle Number Plate</th>
+                        <td>@Html.DisplayFor(model => model.Vehicle.VehicleNumberPlate)</td>
+                    </tr>
+                    <tr>
+                        <th>Vehicle Image</th>
+                        <td>
+                            @if (!string.IsNullOrEmpty(Model.Vehicle?.ImagePath))
+                            {
+                                <img src="@Url.Content(Model.Vehicle.ImagePath)" alt="Vehicle Image" class="img-fluid rounded shadow-sm" style="max-height: 200px;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">No image available</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Created By</th>
+                        <td>@Html.DisplayFor(model => model.CreatedByID)</td>
+                    </tr>
+                    <tr>
+                        <th>Created On</th>
+                        <td>@Html.DisplayFor(model => model.CreatedOn)</td>
+                    </tr>
+                    <tr>
+                        <th>Modified By</th>
+                        <td>@Html.DisplayFor(model => model.ModifiedBy)</td>
+                    </tr>
+                    <tr>
+                        <th>Modified On</th>
+                        <td>@Html.DisplayFor(model => model.ModifiedOn)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-end">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fa fa-list"></i> Back to List
+            </a>
+        </div>
+    </div>
 </div>

@@ -59,7 +59,17 @@ namespace AVTMS.Controllers
 
 
             //geting vehicle owners using nic as primary key
-            ViewData["VehicleOwnerNIC"] = new SelectList(_context.Set<VehicleOwner>(), "NIC", "NIC");
+            // ViewData["VehicleOwnerNIC"] = new SelectList(_context.Set<VehicleOwner>(), "NIC", "NIC");
+            // Get NIC with name for dropdown
+            ViewData["VehicleOwnerNIC"] = new SelectList(
+                _context.VehicleOwner.Select(vo => new
+                {
+                    vo.NIC,
+                    DisplayName = vo.NIC + " (" + vo.OwnerName + ")"  // Assuming Owner  name is the property
+                }),
+                "NIC",
+                "DisplayName"
+            );
             return View();
         }
 
@@ -421,10 +431,24 @@ namespace AVTMS.Controllers
         [Route("Vehicles/SearchNICs")]
         public JsonResult SearchNICs(string term)
         {
+            //only show using NIC allow for NIC search only
+            //var nics = _context.VehicleOwner
+            //    .Where(v => v.NIC.Contains(term))
+            //    .Select(v => new { id = v.NIC, text = v.NIC })
+            //    .ToList();
+
+            // return Json(nics);
+
+
+            //allow to search nVehicle Owner NIC with name
             var nics = _context.VehicleOwner
-                .Where(v => v.NIC.Contains(term))
-                .Select(v => new { id = v.NIC, text = v.NIC })
-                .ToList();
+           .Where(v => v.NIC.Contains(term) || v.OwnerName.Contains(term)) // Allow searching by name too
+           .Select(v => new
+                     {
+                       id = v.NIC,
+                       text = v.NIC + " (" + v.OwnerName + ")"
+                     })
+                        .ToList();
 
             return Json(nics);
         }

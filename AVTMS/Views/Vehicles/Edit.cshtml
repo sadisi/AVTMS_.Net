@@ -4,9 +4,15 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="card shadow-sm mb-2 mt-2">
+    <div class="card-body">
+        <h4 class=" mt-2  mb-2 text-center">
+            <i class="fas fa-edit me-2 text-primary mr-2"></i>Edit Vehicle Details
+        </h4>
+        
+    </div>
+</div>
 
-<h4>Vehicle</h4>
 
 <!-- Created Date & Time Info Box -->
 <div class="info-box mb-3 text-bg-success shadow-sm rounded-3">
@@ -28,8 +34,8 @@
 
 
 <hr />
-<div class="row">
-    <div class="col-md-12">
+<div class="row card shadow-sm ">
+    <div class="col-md-12 mt-2 mb-2 mr-2 ">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -46,7 +52,9 @@
                         <label>Current Image</label><br />
                         @if (!string.IsNullOrEmpty(Model.ImagePath))
                         {
-                            <img src="@Model.ImagePath" alt="Vehicle Image" style="max-width: 300px; height: auto; margin-bottom: 10px;" />
+                            <img src="@Model.ImagePath" alt="Vehicle Image" style="max-width: 300px; height: auto; margin-bottom: 10px; border: 2px solid #dee2e6; border-radius: 8px; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+                                 onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)'"
+                                 onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'" />
                         }
                         else
                         {
@@ -62,7 +70,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Select New Image</label>
-                                <input type="file" name="imageFile" class="form-control" accept="image/*" onchange="previewImage(event)">
+                                <input type="file" name="imageFile" class="form-control" accept="image/*" onchange="previewImage(event) " required>
                             </div>
                         </div>
                         <!-- Placeholder text -->
@@ -70,42 +78,42 @@
 
                         <!-- Image preview -->
                         <div class="col-md-6">
-                            <img id="imagePreview" src="" alt="Preview" style="max-height: 200px; display: none;" />
+                            <img id="imagePreview" src="" alt="Preview" style="max-height: 200px; display: none;" required />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VehicleNumberPlate" class="control-label"></label>
-                        <input asp-for="VehicleNumberPlate" class="form-control" />
+                        <input asp-for="VehicleNumberPlate" class="form-control" required />
                         <span asp-validation-for="VehicleNumberPlate" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VehicleModel" class="control-label"></label>
-                        <input asp-for="VehicleModel" class="form-control" />
+                        <input asp-for="VehicleModel" class="form-control" required />
                         <span asp-validation-for="VehicleModel" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VehicleColor" class="control-label"></label>
-                        <input asp-for="VehicleColor" class="form-control" />
+                        <input asp-for="VehicleColor" class="form-control" required />
                         <span asp-validation-for="VehicleColor" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VehicleNote" class="control-label"></label>
-                        <input asp-for="VehicleNote" class="form-control" />
+                        <input asp-for="VehicleNote" class="form-control" required />
                         <span asp-validation-for="VehicleNote" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VehicleOwnerNIC" class="control-label"></label>
-                        <select asp-for="VehicleOwnerNIC" class="form-control" asp-items="ViewBag.VehicleOwnerNIC"></select>
+                        <select asp-for="VehicleOwnerNIC" class="form-control" asp-items="ViewBag.VehicleOwnerNIC" required></select>
                         <span asp-validation-for="VehicleOwnerNIC" class="text-danger"></span>
                     </div>
                 </div>
@@ -128,6 +136,7 @@
         </form>
     </div>
 </div>
+
 
 
 @section Scripts {

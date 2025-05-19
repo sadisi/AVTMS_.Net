@@ -51,6 +51,7 @@ namespace AVTMS.Controllers
             //ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "VehicleNumberPlate");
 
             //get numberplate number with vehicle model
+            //search disabel numberplate
             ViewData["VehicleId"] = new SelectList(
     _context.Vehicles.Select(v => new
     {
@@ -60,12 +61,24 @@ namespace AVTMS.Controllers
     "Id",
     "DisplayName"
 );
+            //Search enable numberplate drop down 
+            ViewData["VehicleId"] = new SelectList(
+    _context.Vehicles.Select(v => new
+    {
+        v.Id,
+        DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
+    }).ToList(),
+    "Id",
+    "DisplayName"
+);
+
+
 
             return View();
         }
 
         // POST: VehicleNotes/Create
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(VehicleNotes vehicleNotes)
@@ -214,5 +227,23 @@ namespace AVTMS.Controllers
         {
             return _context.VehicleNotes.Any(e => e.Id == id);
         }
+
+
+        [HttpGet]
+        public JsonResult SearchVehicleNumberPlates(string term)
+        {
+            var results = _context.Vehicles
+                .Where(v => v.VehicleNumberPlate.Contains(term) || v.VehicleModel.Contains(term))
+                .Select(v => new {
+                    id = v.Id,
+                    text = $"{v.VehicleNumberPlate} ({v.VehicleModel}) - Owner NIC: {v.VehicleOwnerNIC}"
+                })
+                .Take(10)
+                .ToList();
+
+            return Json(results);
+        }
+
+
     }
 }

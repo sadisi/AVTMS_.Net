@@ -4,45 +4,51 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<div class="card shadow-sm mb-4 mt-5">
+    <div class="card-body">
+        <h4 class="text-center text-danger mb-4">
+            <i class="fas fa-trash-alt me-2"></i>Confirm Delete Vehicle Note
+        </h4>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>VehicleNotes</h4>
-    <hr />
-    <table class="table table-bordered table-striped table-hover">
-        <tbody>
-            <tr>
-                <td>@Html.DisplayNameFor(model => model.NoteContent)</td>
-                <td>@Html.DisplayFor(model => model.NoteContent)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(model => model.Vehicle)</td>
-                <td>@Html.DisplayFor(model => model.Vehicle.Id)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(model => model.CreatedByID)</td>
-                <td>@Html.DisplayFor(model => model.CreatedByID)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(model => model.CreatedOn)</td>
-                <td>@Html.DisplayFor(model => model.CreatedOn)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(model => model.ModifiedBy)</td>
-                <td>@Html.DisplayFor(model => model.ModifiedBy)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(model => model.ModifiedOn)</td>
-                <td>@Html.DisplayFor(model => model.ModifiedOn)</td>
-            </tr>
-        </tbody>
-    </table>
+        <h5 class="mb-4 text-primary fw-semibold border-bottom pb-2 text-muted text-center">
+            Note ID: @Model.Id
+        </h5>
 
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <tbody>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.NoteContent)</th>
+                        <td>@Html.DisplayFor(model => model.NoteContent)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Vehicle)</th>
+                        <td>@Html.DisplayFor(model => model.Vehicle.VehicleNumberPlate) {@Html.DisplayFor(model => model.Vehicle.VehicleModel)}</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CreatedByID)</th>
+                        <td>@Html.DisplayFor(model => model.CreatedByID)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CreatedOn)</th>
+                        <td>@Html.DisplayFor(model => model.CreatedOn)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.ModifiedBy)</th>
+                        <td>@Html.DisplayFor(model => model.ModifiedBy)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.ModifiedOn)</th>
+                        <td>@Html.DisplayFor(model => model.ModifiedOn)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <form asp-action="Delete" method="post" class="d-flex justify-content-center gap-3 mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger px-4">Delete</button>
+            <a asp-action="Index" class="btn btn-outline-secondary px-4">Back to List</a>
+        </form>
+    </div>
 </div>

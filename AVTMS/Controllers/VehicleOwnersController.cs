@@ -34,7 +34,7 @@ namespace AVTMS.Controllers
             }
 
             var vehicleOwner = await _context.VehicleOwner
-                //new
+                //get vehicle detils according to owner nic
                  .Include(v => v.Vehicles)
                  //
                 .FirstOrDefaultAsync(m => m.NIC == id);

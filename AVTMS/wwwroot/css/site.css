@@ -210,3 +210,17 @@ body {
         color: limegreen;
     }
 }
+
+.vehicle-image {
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 10px;
+    border: 2px solid #dee2e6; /* Soft border */
+    border-radius: 8px; /* Rounded corners */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .vehicle-image:hover {
+        transform: scale(1.03); /* Slight zoom on hover */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    }

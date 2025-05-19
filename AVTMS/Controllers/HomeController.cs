@@ -89,6 +89,9 @@ namespace AVTMS.Controllers
         ("Vehicle Notes", "/VehicleNotes/Index"),
         ("Add Vehicle Notes", "/VehicleNotes/Create"),
 
+        //Live CCTV related
+        ("Live CCTV", "/VehicleDetection/LiveCCTVStream"),
+        
     };
 
         [HttpGet]
