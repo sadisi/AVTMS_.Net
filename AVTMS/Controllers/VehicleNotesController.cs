@@ -100,9 +100,14 @@ namespace AVTMS.Controllers
           v.Id,
           DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
       }),
+
       "Id",
       "DisplayName",
       vehicleNotes.VehicleId
+
+ 
+            
+
   );
 
             return View(vehicleNotes);
@@ -127,10 +132,10 @@ namespace AVTMS.Controllers
             //get numberplate number with vehicle model
             ViewData["VehicleId"] = new SelectList(
             _context.Vehicles.Select(v => new
-                     {
-                         v.Id,
-                         DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
-                      }),
+            {
+                v.Id,
+                DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
+            }),
                              "Id",
                              "DisplayName",
                              vehicleNotes.VehicleId
@@ -140,7 +145,7 @@ namespace AVTMS.Controllers
         }
 
         // POST: VehicleNotes/Edit/5
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, VehicleNotes vehicleNotes)
@@ -177,10 +182,10 @@ namespace AVTMS.Controllers
             //disply numberplate number with vehicle model
             ViewData["VehicleId"] = new SelectList(
                   _context.Vehicles.Select(v => new
-                    {
-                         v.Id,
-                         DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
-                     }),
+                  {
+                      v.Id,
+                      DisplayName = v.VehicleNumberPlate + " (" + v.VehicleModel + ")"
+                  }),
                               "Id",
                                "DisplayName",
                               vehicleNotes.VehicleId
@@ -229,12 +234,16 @@ namespace AVTMS.Controllers
         }
 
 
+
+        //search number plates
+
         [HttpGet]
         public JsonResult SearchVehicleNumberPlates(string term)
         {
             var results = _context.Vehicles
                 .Where(v => v.VehicleNumberPlate.Contains(term) || v.VehicleModel.Contains(term))
-                .Select(v => new {
+                .Select(v => new
+                {
                     id = v.Id,
                     text = $"{v.VehicleNumberPlate} ({v.VehicleModel}) - Owner NIC: {v.VehicleOwnerNIC}"
                 })

@@ -1,6 +1,7 @@
 ﻿// VehicleDetectionController.cs
 using AVTMS.Data;
 using AVTMS.Models;
+using AVTMS.Services;
 using AVTMS.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,12 +16,15 @@ namespace AVTMS.Controllers
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
         private readonly ILogger<VehicleDetectionController> _logger;
+        //for send viloation emails
+        private readonly EmailServices _emailServices;
 
-        public VehicleDetectionController(AppDbContext context, IWebHostEnvironment env, ILogger<VehicleDetectionController> logger)
+        public VehicleDetectionController(AppDbContext context, IWebHostEnvironment env, ILogger<VehicleDetectionController> logger, EmailServices emailServices)
         {
             _context = context;
             _env = env;
             _logger = logger;
+            _emailServices = emailServices;
         }
 
         public async Task<IActionResult> Upload()
@@ -260,6 +264,116 @@ namespace AVTMS.Controllers
 
             return PartialView("_VehicleMatchDetailsPartial", model);
         }
+
+
+        //Viloation email send
+        public async Task<IActionResult> SendViolationEmail(string licensePlate)
+        {
+            // Check if license plate parameter is provided
+            if (string.IsNullOrEmpty(licensePlate))
+                return BadRequest("License plate is missing.");
+
+            // Find the detection record based on the provided license plate (case insensitive)
+            var detect = await _context.VehicleDetects
+                .FirstOrDefaultAsync(d => d.license_plate.ToLower() == licensePlate.ToLower());
+
+            // Return 404 if no detection record found
+            if (detect == null)
+                return NotFound("Detection not found.");
+
+            // Find the vehicle record and include related VehicleOwner and VehicleNotes
+            var vehicle = await _context.Vehicles
+                .Include(v => v.VehicleOwner)
+                .Include(v => v.VehicleNotes)
+                .FirstOrDefaultAsync(v => v.VehicleNumberPlate.ToLower() == detect.license_plate.ToLower());
+
+            // Return 404 if vehicle or its owner is not found
+            if (vehicle == null || vehicle.VehicleOwner == null)
+                return NotFound("Vehicle or owner not found.");
+
+            var owner = vehicle.VehicleOwner;
+
+            // Get the first available note content, or set default if none
+            var noteContent = vehicle.VehicleNotes?.FirstOrDefault()?.NoteContent ?? "No Notes";
+
+            // Parse the detection's start time or use current time as fallback
+            DateTime capturedTime = DateTime.Now;
+            if (!string.IsNullOrEmpty(detect.start_time))
+                DateTime.TryParse(detect.start_time, out capturedTime);
+
+            // Construct the HTML body of the email
+            var body = $@"
+<div style='font-family: Arial, sans-serif; padding: 25px; background-color: #f4f6f8; border-radius: 8px; border: 1px solid #e0e0e0; max-width: 700px; margin: auto;'>
+    <h2 style='color: #c0392b; border-bottom: 2px solid #e74c3c; padding-bottom: 10px;'>Vehicle Violation Notification</h2>
+    <p style='font-size: 16px; color: #333;'>The following vehicle has been identified for a violation. Please review the details below:</p>
+
+    <div style='background-color: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-top: 20px;'>
+        <table style='width: 100%; font-size: 16px; color: #444; border-collapse: collapse;'>
+            <tr>
+                <td style='padding: 10px; font-weight: bold; width: 40%;'> Numberplate:</td>
+                <td style='padding: 10px;'>{detect.license_plate}</td>
+            </tr>
+            <tr style='background-color: #f9f9f9;'>
+                <td style='padding: 10px; font-weight: bold;'>Vehicle Model:</td>
+                <td style='padding: 10px;'>{vehicle.VehicleModel}</td>
+            </tr>
+            <tr>
+                <td style='padding: 10px; font-weight: bold;'>Owner Name:</td>
+                <td style='padding: 10px;'>{owner.OwnerName}</td>
+            </tr>
+            <tr style='background-color: #f9f9f9;'>
+                <td style='padding: 10px; font-weight: bold;'>NIC:</td>
+                <td style='padding: 10px;'>{owner.NIC}</td>
+            </tr>
+            <tr>
+                <td style='padding: 10px; font-weight: bold;'>Captured Time:</td>
+                <td style='padding: 10px;'>{capturedTime}</td>
+            </tr>
+            <tr style='background-color: #f9f9f9;'>
+                <td style='padding: 10px; font-weight: bold;'>Reason:</td>
+                <td style='padding: 10px;'>{noteContent}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style='margin-top: 25px; padding: 15px; background-color: #fff3cd; border-left: 5px solid #f0ad4e; border-radius: 5px; font-size: 16px; color: #8a6d3b;'>
+        <strong>Important:</strong> You are required to <span style='color: #c9302c; font-weight: bold;'>report to the nearest police station within 24 hours</span>.
+    </div>
+
+    <p style='margin-top: 30px; font-size: 14px; color: #999; text-align: center;'>
+        This is an automated message. Please do not reply to this email.
+    </p>
+</div>";
+
+
+
+            // Send the email to the vehicle owner
+            await _emailServices.SendEmailAsync(owner.OwnerEmail, "Violation Alert", body);
+
+            // Log the sent email details to the database
+            _context.ViolationEmails.Add(new ViolationEmail
+            {
+                LicensePlate = detect.license_plate,
+                VehicleModel = vehicle.VehicleModel,
+                NoteContent = noteContent,
+                CapturedTime = capturedTime,
+                OwnerName = owner.OwnerName,
+                OwnerNIC = owner.NIC,
+                OwnerEmail = owner.OwnerEmail,
+                SentAt = DateTime.Now
+            });
+
+            // Persist changes to the database
+            await _context.SaveChangesAsync();
+
+            // Show success message on the redirected page
+            TempData["SuccessMessage"] = $"Violation email sent to {owner.OwnerEmail}";
+
+            // Redirect back to the index page
+            return RedirectToAction(nameof(AllVehicleMatchDetails));
+        }
+
+
 
 
     }

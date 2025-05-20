@@ -63,8 +63,7 @@ namespace AVTMS.Controllers
         }
 
         // POST: Admins/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+ 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Admin admin)
@@ -100,8 +99,7 @@ namespace AVTMS.Controllers
         }
 
         // POST: Admins/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,  Admin admin) //  ---Old code --  public async Task<IActionResult> Edit(int id, [Bind("Id,EmployeeId,NIC,FirstName,MiddleName,LastName,Email,Password,PhoneNumber,RegisteredDate,UserType,UserBranch,CreatedByID,CreatedOn,ModifiedBy,ModifiedOn")] Admin admin)
@@ -196,9 +194,9 @@ namespace AVTMS.Controllers
                 Name = Admins.FirstName,  // or combine names as needed
                 Email = Admins.Email,
                 Password = Admins.Password,
-                ConfirmPassword = Admins.Password,// You can set a default password or leave it empty
+                ConfirmPassword = Admins.Password,// set a default password or leave it empty
                 UserType = Admins.UserType,
-                // You may leave Password/ConfirmPassword empty or handle them as needed.
+                // leave Password/ConfirmPassword empty or handle them as needed.
             };
 
             // Return a partial view that contains your registration form

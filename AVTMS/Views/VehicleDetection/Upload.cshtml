@@ -7,18 +7,29 @@
 <!--Truncate python console output from success message-->
 @{
     var successMessage = TempData["Success"]?.ToString();
-    var truncatedMessage = successMessage?.Length > 200 ? successMessage.Substring(0, 200) + "..." : successMessage;
+    var truncatedMessage = successMessage?.Length > 200 ? successMessage.Substring(0, 500) + "..." : successMessage +" [This terminal out puth is truncated.]";
 }
+
+<!--this button availbale only if there is at least one vehicle detected-->
 @if (Model != null && Model.Any())
 {
-    <div class="text-end mb-3 me-5">
-        <a asp-controller="VehicleDetection"
-           asp-action="AllVehicleMatchDetails"
-           class="btn btn-success">
-            Show All Matched Vehicle Details
-        </a>
+    <div class="card shadow-sm border-0 mb-4 me-5 text-center mt-4">
+        <div class="card-body text-center">
+            <h5 class="  text-success fw-bold ">
+                Matched Vehicles
+            </h5>
+            <p class="card-text text-start text-muted">
+                View all matched vehicle details from the detection system.
+            </p>
+            <a asp-controller="VehicleDetection"
+               asp-action="AllVehicleMatchDetails"
+               class="btn btn-success">
+               <i class="fas fa-info-circle mr-2"></i> Show All Matched Vehicle Details
+            </a>
+        </div>
     </div>
 }
+
 
 
 <!-- Modal -->
@@ -83,7 +94,7 @@
 
                     <div class="mt-4">
                         <button type="submit" class="btn btn-primary w-100 fw-semibold deffect">
-                            Detect Number Plates
+                           <i class="fas fa-search mr-2"></i> Detect Number Plates
                         </button>
                     </div>
                 </form>
@@ -124,8 +135,7 @@
     </div>
 </div>
 
-<!-- Detected Vehicles Table -->
-<!-- Detected Vehicles Table -->
+<!-- Detected Vehicles display Table -->
 <h2 class="mt-5">Detected Vehicles</h2>
 
 <div class="card shadow rounded">

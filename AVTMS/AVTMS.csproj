@@ -21,8 +21,13 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\CCTVvid\" />
+    <Folder Include="wwwroot\profileimg\" />
     <Folder Include="wwwroot\uploads\" />
     <Folder Include="wwwroot\vehicleimages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\SVG\detect.svg" />
   </ItemGroup>
 
 </Project>

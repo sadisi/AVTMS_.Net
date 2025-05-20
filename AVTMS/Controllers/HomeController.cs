@@ -1,9 +1,13 @@
 using System.Diagnostics;
+using System.Globalization;
 using AVTMS.Data;
 using AVTMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+
+
 
 namespace AVTMS.Controllers
 {
@@ -31,6 +35,50 @@ namespace AVTMS.Controllers
             //get the registered number of system users
             var systemRegisteredUsersCount = _context.Users.Count();
             ViewBag.systemRegisteredUsersCount = systemRegisteredUsersCount;
+
+            //get viloation counts
+            var violationCount = _context.ViolationEmails.Count();
+            ViewBag.ViolationCount = violationCount;
+
+
+            //viloation presentage
+            double violationPercentage = 0;
+             var totalVehicles = _context.Vehicles.Count();
+
+            if (totalVehicles > 0)
+            {
+                violationPercentage = (double)violationCount / totalVehicles * 100;
+            }
+
+            ViewBag.ViolationPercentage = Math.Round(violationPercentage, 2);
+
+
+
+            //chart data
+
+
+            var vehicleData = _context.Vehicles
+        .GroupBy(v => v.CreatedOn.Month)
+        .Select(g => new
+        {
+            Month = g.Key,
+            Count = g.Count()
+        })
+        .OrderBy(g => g.Month)
+        .ToList();
+
+            var labels = vehicleData.Select(v => CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(v.Month)).ToList();
+            var counts = vehicleData.Select(v => v.Count).ToList();
+
+            ViewBag.VehicleRegLabels = JsonConvert.SerializeObject(labels);
+            ViewBag.VehicleRegCounts = JsonConvert.SerializeObject(counts);
+
+            // Step 5: Return the view with the data available in ViewBag
+
+
+
+            //
+
             return View();
         }
 
@@ -110,5 +158,10 @@ namespace AVTMS.Controllers
 
             return Content(string.Join("", matches));
         }
+
+
+
+
+        //Chart
     }
 }

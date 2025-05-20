@@ -114,94 +114,104 @@ namespace AVTMS.Controllers
                     if (owner != null && !string.IsNullOrEmpty(owner.OwnerEmail))
                     {
                         string subject = "Vehicle Registration Successful";
-                        string body = $@" <html>
+                        string body = $@"
+<html>
 <head>
     <style>
         body {{
             font-family: Arial, sans-serif;
-            color: #333;
-            line-height: 1.6;
+            background-color: #f4f6f8;
             margin: 0;
             padding: 0;
+            color: #333;
+        }}
+        .container {{
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }}
+        .header {{
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            font-weight: bold;
         }}
         h2 {{
-            color: #4CAF50;
+            color: #333;
+            margin-top: 20px;
         }}
         p {{
             font-size: 16px;
+            margin: 10px 0;
             color: #555;
-        }}
-        ul {{
-            list-style-type: none;
-            padding: 0;
-        }}
-        li {{
-            margin-bottom: 10px;
-        }}
-        li strong {{
-            color: #333;
         }}
         table {{
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            font-size: 16px;
         }}
         th, td {{
-            border: 1px solid #ddd;
-            padding: 10px;
+            padding: 12px 15px;
             text-align: left;
         }}
         th {{
-            background-color: #4CAF50;
-            color: white;
+            background-color: #f0f0f0;
+            color: #333;
+            width: 35%;
         }}
         td {{
-            background-color: #f9f9f9;
+            background-color: #fafafa;
+            color: #555;
         }}
         .footer {{
-            font-size: 12px;
-            color: #777;
-            margin-top: 20px;
-        }}
-        .subject {{
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
+            margin-top: 30px;
+            font-size: 13px;
+            color: #888;
             text-align: center;
-            font-size: 20px;
-            font-weight: bold;
         }}
     </style>
 </head>
 <body>
-    <div class='subject'>Vehicle Registration Successful</div>
-    <h2>Vehicle Registration Confirmation</h2>
-    <p>Dear {owner.OwnerName},</p>
-    <p>Your vehicle has been successfully registered in the system.</p>
-    
-    <table>
-        <tr>
-            <th>Vehicle Number Plate :</th>
-            <td>{vehicle.VehicleNumberPlate}</td>
-        </tr>
-        <tr>
-            <th>Owner NIC : </th>
-            <td>{owner.NIC}</td>
-        </tr>
-         <tr>
-            <th>Model : </th>
-            <td>{vehicle.VehicleModel}</td>
-        </tr>
-        <tr>
-            <th>Registered Time :</th>
-            <td>{vehicle.CreatedOn}</td>
-        </tr>
-    </table>
+    <div class='container'>
+        <div class='header'>Vehicle Registration Successful</div>
 
-    <p>Thank you for using our system.</p>
-    
-    <div class='footer'>
-        <p><strong>Note:</strong> This is a system-generated receipt. Please do not reply to this email.</p>
+        <h2>Vehicle Registration Confirmation</h2>
+        <p>Dear {owner.OwnerName},</p>
+        <p>Your vehicle has been successfully registered in the system. Below are the registration details:</p>
+
+        <table>
+            <tr>
+                <th>Vehicle Number Plate:</th>
+                <td>{vehicle.VehicleNumberPlate}</td>
+            </tr>
+            <tr>
+                <th>Owner NIC:</th>
+                <td>{owner.NIC}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Model:</th>
+                <td>{vehicle.VehicleModel}</td>
+            </tr>
+            <tr>
+                <th>Registered Time:</th>
+                <td>{vehicle.CreatedOn}</td>
+            </tr>
+        </table>
+
+        <p>Thank you for using our system.</p>
+
+        <div class='footer'>
+            <p><strong>Note:</strong> This is a system-generated message. Please do not reply to this email.</p>
+        </div>
     </div>
 </body>
 </html>";
@@ -296,8 +306,7 @@ namespace AVTMS.Controllers
         }
 
         // POST: Vehicles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Vehicle vehicle)

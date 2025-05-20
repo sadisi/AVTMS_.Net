@@ -3,7 +3,7 @@
 }
 
 <!-- Small boxes (Stat box) -->
-<div class="row">
+<div class="row pt-4">
     <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-info">
@@ -53,7 +53,7 @@
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>65<sup style="font-size: 20px">%</sup></h3>
+                <h3>@(ViewBag.violationPercentage ?? 0)%</sup></h3>
 
                 <p>Viloations</p>
             </div>
@@ -90,7 +90,7 @@
             </div><!-- /.card-header -->
             <div class="card-body">
                 <div class="tab-content p-0">
-                    <!-- Morris chart - Sales -->
+                    <!-- Morris chart - stats -->
                     <div class="chart tab-pane active" id="revenue-chart"
                          style="position: relative; height: 300px;">
                         <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
@@ -131,7 +131,7 @@
                             <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
                         </div>
                         <!-- /.direct-chat-infos -->
-                        <img class="direct-chat-img" src="~/AdminLTE/dist/img/user1-128x128.jpg" alt="message user image">
+                        <img class="direct-chat-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="message user image">
                         <!-- /.direct-chat-img -->
                         <div class="direct-chat-text">
                            I need full report of vehicle registration
@@ -161,7 +161,7 @@
                             <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
                         </div>
                         <!-- /.direct-chat-infos -->
-                        <img class="direct-chat-img" src="~/AdminLTE/dist/img/user1-128x128.jpg" alt="message user image">
+                        <img class="direct-chat-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="message user image">
                         <!-- /.direct-chat-img -->
                         <div class="direct-chat-text">
                             ok
@@ -192,12 +192,12 @@
                     <ul class="contacts-list">
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/user1-128x128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
-                                        Count Dracula
-                                        <small class="contacts-list-date float-right">2/28/2015</small>
+                                        vilo
+                                        <small class="contacts-list-date float-right">2/28/2025</small>
                                     </span>
                                     <span class="contacts-list-msg">How have you been? I was...</span>
                                 </div>
@@ -207,12 +207,12 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/user7-128x128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
-                                        Sarah Doe
-                                        <small class="contacts-list-date float-right">2/23/2015</small>
+                                        Rajapaksha
+                                        <small class="contacts-list-date float-right">2/23/2025</small>
                                     </span>
                                     <span class="contacts-list-msg">I will be waiting for...</span>
                                 </div>
@@ -222,12 +222,12 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/user3-128x128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
-                                        Nadia Jolie
-                                        <small class="contacts-list-date float-right">2/20/2015</small>
+                                        Rajapaksha
+                                        <small class="contacts-list-date float-right">2/20/2025</small>
                                     </span>
                                     <span class="contacts-list-msg">I'll call you back at...</span>
                                 </div>
@@ -237,12 +237,12 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/user5-128x128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
-                                        Nora S. Vans
-                                        <small class="contacts-list-date float-right">2/10/2015</small>
+                                        Rajapaksha
+                                        <small class="contacts-list-date float-right">2/10/2025</small>
                                     </span>
                                     <span class="contacts-list-msg">Where is your new...</span>
                                 </div>
@@ -252,12 +252,12 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/user6-128x128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
-                                        John K.
-                                        <small class="contacts-list-date float-right">1/27/2015</small>
+                                        Vilo.
+                                        <small class="contacts-list-date float-right">1/27/2025</small>
                                     </span>
                                     <span class="contacts-list-msg">Can I take a look at...</span>
                                 </div>
@@ -267,12 +267,12 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/user8-128x128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
-                                        Kenneth M.
-                                        <small class="contacts-list-date float-right">1/4/2015</small>
+                                      Vilo
+                                        <small class="contacts-list-date float-right">1/4/2025</small>
                                     </span>
                                     <span class="contacts-list-msg">Never mind I found...</span>
                                 </div>
@@ -332,7 +332,7 @@
                             <label for="todoCheck1"></label>
                         </div>
                         <!-- todo text -->
-                        <span class="text">Design a nice theme</span>
+                        <span class="text">Check Violation Count</span>
                         <!-- Emphasis label -->
                         <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
                         <!-- General tools such as edit or delete-->
@@ -350,7 +350,7 @@
                             <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
                             <label for="todoCheck2"></label>
                         </div>
-                        <span class="text">Make the theme responsive</span>
+                        <span class="text">Send Viloation Emial to CV789 vehicle</span>
                         <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
                         <div class="tools">
                             <i class="fas fa-edit"></i>
@@ -366,7 +366,7 @@
                             <input type="checkbox" value="" name="todo3" id="todoCheck3">
                             <label for="todoCheck3"></label>
                         </div>
-                        <span class="text">Let theme shine like a star</span>
+                        <span class="text">Fax a full report of vehicle owners details</span>
                         <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
                         <div class="tools">
                             <i class="fas fa-edit"></i>
@@ -382,7 +382,7 @@
                             <input type="checkbox" value="" name="todo4" id="todoCheck4">
                             <label for="todoCheck4"></label>
                         </div>
-                        <span class="text">Let theme shine like a star</span>
+                        <span class="text">Chage login password</span>
                         <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
                         <div class="tools">
                             <i class="fas fa-edit"></i>
@@ -414,7 +414,7 @@
                             <input type="checkbox" value="" name="todo6" id="todoCheck6">
                             <label for="todoCheck6"></label>
                         </div>
-                        <span class="text">Let theme shine like a star</span>
+                        <span class="text">Check Kaduwlea Junction CCTV cameras</span>
                         <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
                         <div class="tools">
                             <i class="fas fa-edit"></i>
@@ -481,7 +481,7 @@
                             </amcharts:ammap>
 
 
-                            <!-- All areas are listed in the line below. You can use this list in your script. -->
+                            <!-- All areas are listed in the line below. -->
                             <!--{id:"LK-11"},{id:"LK-12"},{id:"LK-13"},{id:"LK-21"},{id:"LK-22"},{id:"LK-23"},{id:"LK-31"},{id:"LK-32"},{id:"LK-33"},{id:"LK-41"},{id:"LK-42"},{id:"LK-43"},{id:"LK-44"},{id:"LK-45"},{id:"LK-51"},{id:"LK-52"},{id:"LK-53"},{id:"LK-61"},{id:"LK-62"},{id:"LK-71"},{id:"LK-72"},{id:"LK-81"},{id:"LK-82"},{id:"LK-91"},{id:"LK-92"}-->
 
                         </defs>
@@ -569,21 +569,21 @@
                         <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
                                data-fgColor="#39CCCC">
 
-                        <div class="text-white">Mail-Orders</div>
+                        <div class="text-white">Violations</div>
                     </div>
                     <!-- ./col -->
                     <div class="col-4 text-center">
                         <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
                                data-fgColor="#39CCCC">
 
-                        <div class="text-white">Online</div>
+                        <div class="text-white">Vehicles</div>
                     </div>
                     <!-- ./col -->
                     <div class="col-4 text-center">
                         <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
                                data-fgColor="#39CCCC">
 
-                        <div class="text-white">In-Store</div>
+                        <div class="text-white">Users</div>
                     </div>
                     <!-- ./col -->
                 </div>
@@ -659,5 +659,56 @@
         tooltip.textContent = '';
         tooltip.style.display = 'none';
       });
+    });
+</script>
+
+
+
+<script>
+    const regLabels = @Html.Raw(ViewBag.VehicleRegLabels);
+    const regCounts = @Html.Raw(ViewBag.VehicleRegCounts);
+
+    const ctx = document.getElementById('revenue-chart-canvas').getContext('2d');
+    const regChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: regLabels,
+            datasets: [{
+                label: 'Vehicle Registrations',
+                data: regCounts,
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                borderRadius: 5,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#333',
+                        font: {
+                            size: 14,
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                        color: '#333'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#333'
+                    }
+                }
+            }
+        }
     });
 </script>

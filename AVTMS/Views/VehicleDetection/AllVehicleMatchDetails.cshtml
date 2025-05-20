@@ -4,28 +4,39 @@
     ViewData["Title"] = "All Vehicle Match Details";
 }
 
-<h2 class="mb-4 text-center">All Detected Vehicle Match Details</h2>
 
-<div class="table-responsive">
+<div class="card  shadow-sm mb-6 mt-4">
+    <div class="card-body text-center">
+        <h2 class="fw-bold mb-0">
+           <span class="icon-vehicle-mask mr-2"></span>
+           All Detected Vehicle Match Details
+       </h2>
+    </div>
+</div>
+
+
+
+
+<div class="table-responsive mt-4 mb-4 mr-2 ml-2">
     <table id="example1" class="table table-bordered table-hover align-middle text-center">
         <thead class="table-dark">
             <tr>
-                <th>Image</th>
-                <th>License Plate</th>
-                <th>Owner Name</th>
-                <th>NIC</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Model</th>
-                <th>Wanted Level</th>
-                
-                <th>Vehicle info</th>
-                <th>Detect ID</th>
-                <th>Captured Time</th>
-                <th>End Time</th>
-                <th>Register Date</th>
-                <th>Color</th>
-                <th>Vehicle Notes</th>
+                <th>Image :</th>
+                <th>License Plate :</th>
+                <th>Owner Name :</th>
+                <th>NIC :</th>
+                <th>Email :</th>
+                <th>Phone :</th>
+                <th>Model :</th>
+                <th>Wanted Level :</th>
+                <th>Viloation Email send :</th>
+                <th>Vehicle info :</th>
+                <th>Detect ID :</th>
+                <th>Captured Tim :e</th>
+                <th>End Time :</th>
+                <th>Register Date :</th>
+                <th>Color :</th>
+                <th>Vehicle Notes :</th>
             </tr>
         </thead>
         <tbody>
@@ -119,7 +130,15 @@
                             <span class="badge bg-warning">No Vehicle Notes</span>
                         }
                     </td>
-                    
+
+                    <td>
+                        <form asp-action="SendViolationEmail" method="post">
+                            <input type="hidden" name="licensePlate" value="@detect.license_plate" />
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fas fa-envelope-fill"></i> Send Violation Email
+                            </button>
+                        </form>
+                    </td>
 
 
 
@@ -165,3 +184,21 @@
         </tbody>
     </table>
 </div>
+<!--Email successfull notification-->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var successMessage = '@TempData["SuccessMessage"]';
+            if (successMessage) {
+                $(document).Toasts('create', {
+                    class: 'bg-success',
+                    title: 'Success',
+                    autohide: true,
+                    delay: 3000,
+                    body: successMessage
+                });
+            }
+        });
+    </script>
+}
+

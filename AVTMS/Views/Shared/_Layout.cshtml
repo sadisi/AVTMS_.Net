@@ -29,7 +29,7 @@
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="~/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!--Slecter 2  for searcheble Drop Down-->
-     <link href="~/css/select2.min.css" rel="stylesheet" /> 
+    <link href="~/css/select2.min.css" rel="stylesheet" /> 
     <!-- iCheck -->
     <link rel="stylesheet" href="~/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
@@ -64,23 +64,27 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AVTMS Home</a>
-
-                </li>
                 
+                
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AVTMS Home</a>
+
+                    </li>
+
+                
+               
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                 </li>
                 <!-- Login Logout button -->
                 <partial name="_LoginPartial" />
-                
+
             </ul>
-            
+
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
-                
+
                 <li class="nav-item">
                     <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                         <i class="fas fa-search"></i>
@@ -103,7 +107,7 @@
                         </form>
                     </div>
                 </li>
-               
+
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
@@ -156,16 +160,16 @@
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                     @if(signInManager.IsSignedIn(User))
-                     {
+                    @if(signInManager.IsSignedIn(User))
+                    {
                         var user = await userManager.GetUserAsync(User);
-                    <div class="image">
-                        <img src="~/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">@user.UserName</a>
-                    </div>
-                     }
+                        <div class="image">
+                            <img src="~/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        </div>
+                        <div class="info">
+                            <a href="#" class="d-block">@user.UserName</a>
+                        </div>
+                    }
                 </div>
 
                 <!-- SidebarSearch Form -->
@@ -184,83 +188,154 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
-                        
-                        <li class="nav-item">
-                            
-                        </li>
-                        
-                        <li class="nav-header">EXAMPLES</li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="nav-icon far fa fa-home"></i> <p>
-                                    Home Page
-                                </p>
-                            </a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="RegisteredUsers">
-                                <i class="nav-icon far fa-address-card"></i> <p>
-                                    Registered System Users
-                                </p>
-                            </a>
-                        </li>
+                        with font-awesome or any other icon font library -->
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Admins" asp-action="Index">
-                                <i class="nav-icon  fa fa-users"></i> <p>
-                                    Add Users
-                                    <span class="badge badge-info right">2</span>
-                                </p>
-                            </a>
+
                         </li>
-                       
-                   
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="VehicleOwners" asp-action="Index">
-                                <i class="nav-icon fas fa-list"></i>
-                                <p>
-                                Vehicle Owners List
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Vehicles" asp-action="Index">
-                                <i class="nav-icon fas fa-car"></i>
-                                <p>
-                                    Vehicle List
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="VehicleNotes" asp-action="Index">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>
-                                    Vehicle Notes
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="VehicleDetection" asp-action="Upload">
-                                <i class="nav-icon fas fa-diagnoses"></i>
-                                <p>
-                                    Vehicle Detection
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="VehicleDetection" asp-action="LiveCCTVStream" style="display: flex; align-items: center;">
-                                <div style="width: 24px; height: 24px; margin-right: 8px;">
-                                    <svg id="icon-cctv" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.051 60.051" width="24" height="24">
-                                        <path fill="#fff" d="M56.963 32.026H55.14a3.091 3.091 0 0 0-3.088 3.088v3.912h-10v-6.219c3.646-1.177 5.957-6.052 5.957-12.781 0-7.235-2.669-12.333-6.8-12.988a1.028 1.028 0 0 0-.157-.012h-40a1 1 0 0 0-.982.816H.069c-.02.107-.472 2.648 1.243 4.714 1.138 1.371 2.92 2.169 5.292 2.395a23.298 23.298 0 0 0-.552 5.075c0 7.29 3.075 13 7 13h21v12.967a3.036 3.036 0 0 0 3.033 3.033h1.935a3.03 3.03 0 0 0 2.84-2h10.193v2.912a3.091 3.091 0 0 0 3.088 3.088h1.823a3.091 3.091 0 0 0 3.088-3.088V35.114a3.093 3.093 0 0 0-3.089-3.088zM41.016 9.026c2.397.436 4.788 3.683 5.018 10h-20.52l-3.707-3.707a1 1 0 0 0-.707-.293h-7.404l-.029-.042a7.071 7.071 0 0 0-.34-.495c-.067-.09-.142-.18-.215-.27-.033-.041-.064-.082-.098-.123a7.743 7.743 0 0 0-.123-.141c-.044-.05-.08-.099-.125-.149-.017-.019-.039-.032-.058-.05a11.85 11.85 0 0 0-.593-.596 15.053 15.053 0 0 0-1.191-1.005c-.087-.067-.173-.134-.263-.201-1.513-1.131-3.265-2.134-4.846-2.928h35.201z" />
-                                        <circle class="led-blink-1" cx="28.051" cy="27.026" r="1" />
-                                        <circle class="led-blink-2" cx="24.051" cy="27.026" r="1" />
-                                    </svg>
-                                </div>
-                                <p>Live CCTV</p>
-                            </a>
-                        </li>
+
+                        <li class="nav-header">Navigation</li>
+                        <!--Auth User access-->
+                        @if (userType == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="nav-icon far fa fa-home"></i> <p>
+                                        Home Page
+                                    </p>
+                                </a>
+                            </li>
+
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="RegisteredUsers">
+                                    <i class="nav-icon far fa-address-card"></i> <p>
+                                        Registered System Users
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Admins" asp-action="Index">
+                                    <i class="nav-icon  fa fa-users"></i> <p>
+                                        Add Users
+                                        <span class="badge badge-info right">2</span>
+                                    </p>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link " asp-area="" asp-controller="VehicleOwners" asp-action="Index">
+                                    <i class="nav-icon fas fa-list"></i>
+                                    <p>
+                                        Vehicle Owners List
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " asp-area="" asp-controller="Vehicles" asp-action="Index">
+                                    <i class="nav-icon fas fa-car"></i>
+                                    <p>
+                                        Vehicle List
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="VehicleNotes" asp-action="Index">
+                                    <i class="nav-icon fas fa-file"></i>
+                                    <p>
+                                        Vehicle Notes
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " asp-area="" asp-controller="VehicleDetection" asp-action="Upload">
+                                    <i class="nav-icon fas fa-diagnoses"></i>
+                                    <p>
+                                        Vehicle Detection
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="VehicleDetection" asp-action="LiveCCTVStream" style="display: flex; align-items: center;">
+                                    <div style="width: 24px; height: 24px; margin-right: 8px;">
+                                        <svg id="icon-cctv" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.051 60.051" width="24" height="24">
+                                            <path fill="#fff" d="M56.963 32.026H55.14a3.091 3.091 0 0 0-3.088 3.088v3.912h-10v-6.219c3.646-1.177 5.957-6.052 5.957-12.781 0-7.235-2.669-12.333-6.8-12.988a1.028 1.028 0 0 0-.157-.012h-40a1 1 0 0 0-.982.816H.069c-.02.107-.472 2.648 1.243 4.714 1.138 1.371 2.92 2.169 5.292 2.395a23.298 23.298 0 0 0-.552 5.075c0 7.29 3.075 13 7 13h21v12.967a3.036 3.036 0 0 0 3.033 3.033h1.935a3.03 3.03 0 0 0 2.84-2h10.193v2.912a3.091 3.091 0 0 0 3.088 3.088h1.823a3.091 3.091 0 0 0 3.088-3.088V35.114a3.093 3.093 0 0 0-3.089-3.088zM41.016 9.026c2.397.436 4.788 3.683 5.018 10h-20.52l-3.707-3.707a1 1 0 0 0-.707-.293h-7.404l-.029-.042a7.071 7.071 0 0 0-.34-.495c-.067-.09-.142-.18-.215-.27-.033-.041-.064-.082-.098-.123a7.743 7.743 0 0 0-.123-.141c-.044-.05-.08-.099-.125-.149-.017-.019-.039-.032-.058-.05a11.85 11.85 0 0 0-.593-.596 15.053 15.053 0 0 0-1.191-1.005c-.087-.067-.173-.134-.263-.201-1.513-1.131-3.265-2.134-4.846-2.928h35.201z" />
+                                            <circle class="led-blink-1" cx="28.051" cy="27.026" r="1" />
+                                            <circle class="led-blink-2" cx="24.051" cy="27.026" r="1" />
+                                        </svg>
+                                    </div>
+                                    <p>Live CCTV</p>
+                                </a>
+                            </li>
+
+                        }
+
+                        <!--Base User access-->
+                        @if (userType == "Base User")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link " asp-area="" asp-controller="VehicleDetection" asp-action="Upload">
+                                    <i class="nav-icon fas fa-diagnoses"></i>
+                                    <p>
+                                        Vehicle Detection
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="VehicleNotes" asp-action="Index">
+                                    <i class="nav-icon fas fa-file"></i>
+                                    <p>
+                                        Vehicle Notes
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="VehicleDetection" asp-action="LiveCCTVStream" style="display: flex; align-items: center;">
+                                    <div style="width: 24px; height: 24px; margin-right: 8px;">
+                                        <svg id="icon-cctv" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.051 60.051" width="24" height="24">
+                                            <path fill="#fff" d="M56.963 32.026H55.14a3.091 3.091 0 0 0-3.088 3.088v3.912h-10v-6.219c3.646-1.177 5.957-6.052 5.957-12.781 0-7.235-2.669-12.333-6.8-12.988a1.028 1.028 0 0 0-.157-.012h-40a1 1 0 0 0-.982.816H.069c-.02.107-.472 2.648 1.243 4.714 1.138 1.371 2.92 2.169 5.292 2.395a23.298 23.298 0 0 0-.552 5.075c0 7.29 3.075 13 7 13h21v12.967a3.036 3.036 0 0 0 3.033 3.033h1.935a3.03 3.03 0 0 0 2.84-2h10.193v2.912a3.091 3.091 0 0 0 3.088 3.088h1.823a3.091 3.091 0 0 0 3.088-3.088V35.114a3.093 3.093 0 0 0-3.089-3.088zM41.016 9.026c2.397.436 4.788 3.683 5.018 10h-20.52l-3.707-3.707a1 1 0 0 0-.707-.293h-7.404l-.029-.042a7.071 7.071 0 0 0-.34-.495c-.067-.09-.142-.18-.215-.27-.033-.041-.064-.082-.098-.123a7.743 7.743 0 0 0-.123-.141c-.044-.05-.08-.099-.125-.149-.017-.019-.039-.032-.058-.05a11.85 11.85 0 0 0-.593-.596 15.053 15.053 0 0 0-1.191-1.005c-.087-.067-.173-.134-.263-.201-1.513-1.131-3.265-2.134-4.846-2.928h35.201z" />
+                                            <circle class="led-blink-1" cx="28.051" cy="27.026" r="1" />
+                                            <circle class="led-blink-2" cx="24.051" cy="27.026" r="1" />
+                                        </svg>
+                                    </div>
+                                    <p>Live CCTV</p>
+                                </a>
+                            </li>
+                        }
+
+                        <!--Auth User access-->
+                        @if (userType == "Autharized Users")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Admins" asp-action="Index">
+                                    <i class="nav-icon  fa fa-users"></i> <p>
+                                        Add Users
+                                        <span class="badge badge-info right">2</span>
+                                    </p>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link " asp-area="" asp-controller="VehicleOwners" asp-action="Index">
+                                    <i class="nav-icon fas fa-list"></i>
+                                    <p>
+                                        Vehicle Owners 
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " asp-area="" asp-controller="Vehicles" asp-action="Index">
+                                    <i class="nav-icon fas fa-car"></i>
+                                    <p>
+                                        Vehicles
+                                    </p>
+                                </a>
+                            </li>
+                        }
 
 
            
@@ -376,7 +451,7 @@
         });
     </script>
 
-    //Search bar 
+    <!--Search bar--> 
     <script>
         const input = document.getElementById("navbarSearchInput");
         const results = document.getElementById("searchResults");
@@ -403,6 +478,9 @@
             }
         });
     </script>
+
+
+
 
     
 </body>

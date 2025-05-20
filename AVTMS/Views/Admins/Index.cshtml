@@ -6,7 +6,7 @@
 
 @if (TempData["SuccessMessage"] != null)
 {
-    <div id="success-alert" class="alert alert-primary d-flex align-items-center" role="alert">
+    <div id="success-alert" class="alert alert-primary d-flex align-items-center mr-2" role="alert">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
              class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
              viewBox="0 0 16 16" role="img" aria-label="Warning:">
@@ -28,21 +28,29 @@
 
 <div class="text-center">
 
-    <div>
-        <h1>Admin Registration Page</h1>
+    <div class="container mt-5 ">
+        <div class="card shadow-lg rounded-4 mt-5 mb-5">
+            <div class="card-body mt-3">
+                <h2 class="card-title text-center mb-4 text-primary">👤 Admin Registration Page</h2>
+
+                <div class="d-flex justify-content-center gap-3 mb-4 flex-wrap ">
+                    <a class="btn btn-outline-primary d-flex align-items-center gap-2 px-4 mr-3" asp-area="" asp-controller="BaseUsers" asp-action="Index">
+                        <i class="fa fa-users mr-2"></i> Base User Registration page
+                    </a>
+
+                    <a class="btn btn-outline-primary d-flex align-items-center gap-2 px-4 mr-3" asp-area="" asp-controller="AuthUsers" asp-action="Index">
+                        <i class="fa fa-user-shield mr-2"></i> Authorized User Registration page
+                    </a>
+
+                    <a class="btn btn-success d-flex align-items-center gap-2 px-4 mr-3" asp-action="Create">
+                        <i class="fa fa-user-tie mr-2"></i> Add New Admin
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div class="mb-3">
 
-        <a class="btn btn-primary" asp-area="" asp-controller="BaseUsers" asp-action="Index"><i class="fa fa-plus"></i> Add New Base User 👥</a>
-        <a class="btn btn-primary" asp-area="" asp-controller="AuthUsers" asp-action="Index"><i class="fa fa-plus"></i> Add New Authorized Users 👥</a>
-    </div>
-
-
-
-    <p>
-        <a asp-action="Create" class=" btn btn-outline-success"><i class="fa fa-plus"></i>Add New Admin </a>
-    </p>
+    <!---->
     <div class="card">
         <div class="card-header">
          <h3 class="card-title">Admin List</h3>

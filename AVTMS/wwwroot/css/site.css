@@ -271,3 +271,33 @@ body {
     display: inline-block;
     font-weight: 600;
 }
+
+
+/*Svg for vehicle detection page alkl vehicle detection at once*/
+.icon-vehicle-mask {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: #343a40; /* Icon color */
+
+    mask-image: url('/SVG/detect.svg');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: url('/SVG/detect.svg');
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+}
+
+/*Button*/
+
+.bt-shadow {
+    transition: all 0.3s ease-in-out;
+    box-shadow: none;
+}
+
+    .btn:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
