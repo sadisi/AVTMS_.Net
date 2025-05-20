@@ -1,0 +1,46 @@
+﻿@model AVTMS.ViewModels.DetectedVehicleViewModel
+
+<h6>Detection Info</h6>
+<p><strong>Detection ID:</strong> @Model.Detection.DetectId</p>
+<p><strong>Start Time:</strong> @Model.Detection.start_time</p>
+<p><strong>End Time:</strong> @Model.Detection.end_time</p>
+<p><strong>License Plate:</strong> @Model.Detection.license_plate</p>
+
+<hr />
+
+<h6>Vehicle Info</h6>
+<p><strong>Vehicle Number Plate:</strong> @Model.MatchedVehicle.VehicleNumberPlate</p>
+<p><strong>Model:</strong> @Model.MatchedVehicle.VehicleModel</p>
+<p><strong>Color:</strong> @Model.MatchedVehicle.VehicleColor</p>
+<p><strong>Registered Date:</strong> @Model.MatchedVehicle.CreatedOn.ToString("yyyy-MM-dd")</p>
+
+@if (!string.IsNullOrEmpty(Model.MatchedVehicle.ImagePath))
+{
+    <img src="@Url.Content(Model.MatchedVehicle.ImagePath)" alt="Vehicle Image" class="img-fluid" style="max-height: 200px;" />
+}
+
+<hr />
+
+<h6>Owner Info</h6>
+<p><strong>Name:</strong> @Model.MatchedVehicle.VehicleOwner?.OwnerName</p>
+<p><strong>NIC:</strong> @Model.MatchedVehicle.VehicleOwner?.NIC</p>
+<p><strong>Mobile:</strong> @Model.MatchedVehicle.VehicleOwner?.OwnerMobileNumber</p>
+<p><strong>Email:</strong> @Model.MatchedVehicle.VehicleOwner?.OwnerEmail</p>
+<p><strong>Address:</strong> @Model.MatchedVehicle.VehicleOwner?.OwnerAddress</p>
+
+<hr />
+
+<h6>Vehicle Notes</h6>
+@if (Model.MatchedVehicle.VehicleNotes != null && Model.MatchedVehicle.VehicleNotes.Any())
+{
+    <ul>
+        @foreach (var note in Model.MatchedVehicle.VehicleNotes)
+        {
+            <li>@note.NoteContent (added on @note.CreatedOn.ToString("yyyy-MM-dd"))</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No notes found for this vehicle.</p>
+}

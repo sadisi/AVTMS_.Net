@@ -619,7 +619,7 @@ namespace AVTMS.Migrations
             modelBuilder.Entity("AVTMS.Models.VehicleNotes", b =>
                 {
                     b.HasOne("AVTMS.Models.Vehicle", "Vehicle")
-                        .WithMany()
+                        .WithMany("VehicleNotes")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -676,6 +676,11 @@ namespace AVTMS.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AVTMS.Models.Vehicle", b =>
+                {
+                    b.Navigation("VehicleNotes");
                 });
 
             modelBuilder.Entity("AVTMS.Models.VehicleOwner", b =>

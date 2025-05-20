@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AVTMS.Models
 {
@@ -12,6 +13,9 @@ namespace AVTMS.Models
         public string end_time { get; set; }
         public string license_plate { get; set; }
 
-       
+        [NotMapped]
+        public Vehicle MatchedVehicle { get; set; }
+
+
     }
 }

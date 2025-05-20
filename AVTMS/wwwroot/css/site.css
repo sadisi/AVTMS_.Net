@@ -224,3 +224,50 @@ body {
         transform: scale(1.03); /* Slight zoom on hover */
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
     }
+
+
+
+/*Vehicle detection full veiw*/
+/* vehicle-notes.css */
+
+.vehicle-note-container {
+    margin-bottom: 0.5rem;
+}
+
+.vehicle-note-content {
+    background-color: #f8d7da; /* light red background */
+    color: #721c24; /* dark red text */
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.vehicle-note-icon {
+    color: #dc3545; /* Bootstrap danger red */
+    margin-right: 0.25rem;
+}
+
+.vehicle-extra-note-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.vehicle-extra-note-item {
+    margin-bottom: 0.25rem;
+}
+
+.vehicle-extra-note-icon {
+    color: #ffc107; /* Bootstrap warning yellow */
+    margin-right: 0.25rem;
+}
+
+.vehicle-extra-note-content {
+    background-color: #fff3cd; /* light yellow background */
+    color: #856404; /* dark yellow text */
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: 600;
+}

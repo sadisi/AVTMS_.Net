@@ -9,17 +9,36 @@
     var successMessage = TempData["Success"]?.ToString();
     var truncatedMessage = successMessage?.Length > 200 ? successMessage.Substring(0, 200) + "..." : successMessage;
 }
-
-<!--Model button for vehicle details only avaoilable deatails exist in db-->
-
 @if (Model != null && Model.Any())
 {
     <div class="text-end mb-3 me-5">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vehicleMatchModal">
-            Show Matched Vehicle Details
-        </button>
+        <a asp-controller="VehicleDetection"
+           asp-action="AllVehicleMatchDetails"
+           class="btn btn-success">
+            Show All Matched Vehicle Details
+        </a>
     </div>
 }
+
+
+<!-- Modal -->
+<div class="modal fade" id="vehicleMatchModal" tabindex="-1" aria-labelledby="vehicleMatchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="vehicleMatchModalLabel">Vehicle Match Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> <i class="fas fa-xmark"></i></button>
+            </div>
+            <div class="modal-body" id="vehicleMatchModalBody">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status" id="loadingSpinner" style="display:none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- Vehicle Footage Upload Panel -->
@@ -122,6 +141,7 @@
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th>License Plate</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,7 +152,19 @@
                             <td>@detect.start_time</td>
                             <td>@detect.end_time</td>
                             <td>@detect.license_plate</td>
+                            <td>
+
+                                <button type="button"
+                                        class="btn btn-success btnShowVehicleMatch"
+                                       
+                                        data-licenseplate="@detect.license_plate">
+                                    Show Details
+                                </button>
+                            </td>
+ 
                         </tr>
+
+
                     }
                 </tbody>
             </table>
@@ -159,5 +191,65 @@
       
 
     </script>
+    <!--For vehicle detected data show popup model-->
+    
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Rebind event every time modal is opened
+            document.querySelectorAll('.btnShowVehicleMatch').forEach(button => {
+                button.addEventListener('click', function () {
+                    var licensePlate = this.getAttribute('data-licenseplate');
+                    var modalBody = document.getElementById('vehicleMatchModalBody');
+                    var spinner = document.getElementById('loadingSpinner');
+                    var modalElement = document.getElementById('vehicleMatchModal');
+                    var bsModal = bootstrap.Modal.getOrCreateInstance(modalElement); // ensures modal is usable again
+
+                    // Clear previous content and show spinner
+                    modalBody.innerHTML = '';
+                    spinner.style.display = 'inline-block';
+
+                    fetch(`/VehicleDetection/_VehicleMatchDetailsPartialByPlate?plate=${encodeURIComponent(licensePlate)}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                if (response.status === 404) {
+                                    throw new Error('No data found for this license plate.');
+                                } else {
+                                    throw new Error('Network error. Please try again.');
+                                }
+                            }
+                            return response.text();
+                        })
+                        .then(html => {
+                            spinner.style.display = 'none';
+                            modalBody.innerHTML = html;
+                            bsModal.show(); // only show modal if data is valid
+                        })
+                        .catch(error => {
+                            spinner.style.display = 'none';
+                            modalBody.innerHTML = `<div class="alert alert-warning">${error.message}</div>`;
+                            bsModal.show(); // still show modal to display error
+                        });
+                });
+            });
+
+            // On modal close, reset content and remove leftover backdrop
+            var vehicleMatchModal = document.getElementById('vehicleMatchModal');
+            vehicleMatchModal.addEventListener('hidden.bs.modal', function () {
+                var modalBody = document.getElementById('vehicleMatchModalBody');
+                var spinner = document.getElementById('loadingSpinner');
+
+                modalBody.innerHTML = '';
+                spinner.style.display = 'none';
+
+                // Clean up any leftover backdrop
+                const backdrops = document.querySelectorAll('.modal-backdrop');
+                backdrops.forEach(backdrop => backdrop.remove());
+            });
+        });
+    </script>
+
+
+   
+
 
 }

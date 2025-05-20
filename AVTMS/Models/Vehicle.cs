@@ -37,7 +37,8 @@ namespace AVTMS.Models
         public IFormFile ImageFile { get; set; }
 
 
-
+        //get vehicle notes from VehicleNotes table/model
+        public ICollection<VehicleNotes> VehicleNotes { get; set; } = new List<VehicleNotes>();
 
     }
 }

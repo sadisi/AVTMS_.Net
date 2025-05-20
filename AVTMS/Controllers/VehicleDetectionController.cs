@@ -1,6 +1,7 @@
 ﻿// VehicleDetectionController.cs
 using AVTMS.Data;
 using AVTMS.Models;
+using AVTMS.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -149,5 +150,117 @@ namespace AVTMS.Controllers
             public string NumberPlate { get; set; }
             public DateTime Timestamp { get; set; }
         }
+
+
+
+
+        //geting vehicle details after the detection of the vehicle using vehicle model, vehicle notemodel and vOwner model
+        /*   public async Task<IActionResult> VehicleMatchDetailsPartial(int id)
+           {
+               var detect = await _context.VehicleDetects.FindAsync(id);
+               if (detect == null)
+                   return NotFound();
+
+               var vehicle = await _context.Vehicles
+                   .Include(v => v.VehicleOwner)
+                   .Include(v => v.VehicleNotes)
+                   .FirstOrDefaultAsync(v => v.VehicleNumberPlate == detect.license_plate);
+
+               if (vehicle == null)
+                   return NotFound();
+
+               var model = new DetectedVehicleViewModel
+               {
+                   Detection = detect,
+                   MatchedVehicle = vehicle
+               };
+
+               return PartialView("_VehicleMatchDetailsPartial", model);
+           }
+        */
+        // In VehicleDetectionController.cs
+
+        [HttpGet]
+        public async Task<IActionResult> _VehicleMatchDetailsPartial(int id)
+        {
+            var detect = await _context.VehicleDetects.FindAsync(id);
+            if (detect == null)
+                return NotFound();
+
+            var vehicle = await _context.Vehicles
+                .Include(v => v.VehicleOwner)
+                .Include(v => v.VehicleNotes)
+                .FirstOrDefaultAsync(v => v.VehicleNumberPlate == detect.license_plate);
+
+            if (vehicle == null)
+                return NotFound();
+
+            var model = new DetectedVehicleViewModel
+            {
+                Detection = detect,
+                MatchedVehicle = vehicle
+            };
+
+            return PartialView("_VehicleMatchDetailsPartial", model);
+        }
+
+
+
+        //to show all detected vehicle at once
+        [HttpGet]
+        public async Task<IActionResult> AllVehicleMatchDetails()
+        {
+            var vehicleDetects = await _context.VehicleDetects.ToListAsync();
+            var vehicles = await _context.Vehicles
+                .Include(v => v.VehicleOwner)
+                .Include(v => v.VehicleNotes)
+                .ToListAsync();
+
+            // Match detected license plates with existing vehicles
+            foreach (var detect in vehicleDetects)
+            {
+                var matchedVehicle = vehicles.FirstOrDefault(v =>
+                    v.VehicleNumberPlate.ToLower() == detect.license_plate.ToLower());
+
+                detect.MatchedVehicle = matchedVehicle;
+            }
+
+            return View(vehicleDetects);
+        }
+
+
+
+        //
+
+        [HttpGet]
+        public async Task<IActionResult> _VehicleMatchDetailsPartialByPlate(string plate)
+        {
+            if (string.IsNullOrEmpty(plate))
+                return BadRequest();
+
+            var vehicle = await _context.Vehicles
+                .Include(v => v.VehicleOwner)
+                .Include(v => v.VehicleNotes)
+                .FirstOrDefaultAsync(v => v.VehicleNumberPlate == plate);
+
+            if (vehicle == null)
+                return NotFound();
+
+            var detect = await _context.VehicleDetects
+                .FirstOrDefaultAsync(d => d.license_plate == plate);
+
+            if (detect == null)
+                return NotFound();
+
+            var model = new DetectedVehicleViewModel
+            {
+                Detection = detect,
+                MatchedVehicle = vehicle
+            };
+
+            return PartialView("_VehicleMatchDetailsPartial", model);
+        }
+
+
     }
 }

@@ -1,0 +1,167 @@
+﻿@model List<AVTMS.Models.VehicleDetect>
+
+@{
+    ViewData["Title"] = "All Vehicle Match Details";
+}
+
+<h2 class="mb-4 text-center">All Detected Vehicle Match Details</h2>
+
+<div class="table-responsive">
+    <table id="example1" class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>Image</th>
+                <th>License Plate</th>
+                <th>Owner Name</th>
+                <th>NIC</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Model</th>
+                <th>Wanted Level</th>
+                
+                <th>Vehicle info</th>
+                <th>Detect ID</th>
+                <th>Captured Time</th>
+                <th>End Time</th>
+                <th>Register Date</th>
+                <th>Color</th>
+                <th>Vehicle Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detect in Model)
+            {
+                var vehicle = detect.MatchedVehicle;
+                var owner = vehicle?.VehicleOwner;
+                var notes = vehicle?.VehicleNotes;
+
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(vehicle?.ImagePath))
+                        {
+                            <img src="@vehicle.ImagePath" alt="Vehicle Image"
+                                 class="img-thumbnail rounded shadow-sm"
+                                 style="max-width: 100px; height: auto;" />
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">No Image</span>
+                        }
+                    </td>
+
+                    <td><span class="fw-semibold">@detect.license_plate</span></td>
+
+                    <td>
+                        @Html.Raw(!string.IsNullOrEmpty(owner?.OwnerName)
+                                 ? owner.OwnerName
+                                 : "<span class='badge bg-secondary'>N/A</span>")
+                    </td>
+
+                    <td>
+                        @Html.Raw(!string.IsNullOrEmpty(owner?.NIC)
+                                 ? owner.NIC
+                                 : "<span class='badge bg-secondary'>N/A</span>")
+                    </td>
+
+                    <td>
+                        @Html.Raw(!string.IsNullOrEmpty(owner?.OwnerEmail)
+                                 ? owner.OwnerEmail
+                                 : "<span class='badge bg-secondary'>N/A</span>")
+                    </td>
+
+                    <td>
+                        @Html.Raw(!string.IsNullOrEmpty(owner?.OwnerMobileNumber)
+                                 ? owner.OwnerMobileNumber
+                                 : "<span class='badge bg-secondary'>N/A</span>")
+                    </td>
+
+                    <td>
+                        @Html.Raw(!string.IsNullOrEmpty(vehicle?.VehicleModel)
+                                 ? vehicle.VehicleModel
+                                 : "<span class='badge bg-secondary'>N/A</span>")
+                    </td>
+
+                    <td>
+                        @* Show VehicleNote if available *@
+                        @if (!string.IsNullOrEmpty(vehicle?.VehicleNote))
+                        {
+                            <div class="mb-2">
+                                <i class="bi bi-exclamation-triangle-fill text-danger me-1"></i>
+                                <span class="fw-semibold px-2 py-1 d-inline-block" style="background-color: #f8d7da; color: #721c24; border-radius: 4px;">
+                                    @vehicle.VehicleNote
+                                </span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="mb-2">
+                                <span class="badge bg-secondary">No Vehicle Note</span>
+                            </div>
+                        }
+
+                        @* Show VehicleNotes list if available *@
+                        @if (notes != null && notes.Any())
+                        {
+                            <ul class="list-unstyled mb-0">
+                                @foreach (var note in notes)
+                                {
+                                    <li class="mb-1">
+                                        <i class="bi bi-chat-left-text-fill text-warning me-1"></i>
+                                        <span class="fw-semibold px-2 py-1 d-inline-block" style="background-color: #fff3cd; color: #856404; border-radius: 4px;">
+                                            @note.NoteContent
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning">No Vehicle Notes</span>
+                        }
+                    </td>
+                    
+
+
+
+                    <td class="text-center">
+                        @Html.Raw(!string.IsNullOrEmpty(vehicle?.VehicleNote)
+                                 ? vehicle.VehicleNote
+                                 : "<span class='badge bg-secondary'>N/A</span>")
+                    </td>
+
+                    <td>@detect.DetectId</td>
+                    <td>@detect.start_time</td>
+                    <td>@detect.end_time</td>
+
+                    <td>
+                        @Html.Raw(owner != null
+                                 ? owner.CreatedOn.ToShortDateString()
+                                 : "<span class='badge bg-secondary'>N/A</span>")
+                    </td>
+
+                    <td>
+                        @Html.Raw(!string.IsNullOrEmpty(vehicle?.VehicleColor)
+                                 ? vehicle.VehicleColor
+                                 : "<span class='badge bg-secondary'>N/A</span>")
+                    </td>
+
+                    <td>
+                        @if (notes != null && notes.Any())
+                        {
+                            <ul class="list-unstyled mb-0">
+                                @foreach (var note in notes)
+                                {
+                                    <li><span class="fw-semibold">@note.NoteContent</span></li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">No Notes</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
