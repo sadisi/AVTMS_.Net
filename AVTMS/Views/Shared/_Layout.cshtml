@@ -220,7 +220,7 @@
                                 <a class="nav-link" asp-area="" asp-controller="Admins" asp-action="Index">
                                     <i class="nav-icon  fa fa-users"></i> <p>
                                         Add Users
-                                        <span class="badge badge-info right">2</span>
+                                        <span class="badge badge-info right">@(ViewBag.TotalUserCount ?? "+")</span>
                                     </p>
                                 </a>
                             </li>
@@ -277,6 +277,14 @@
                         @if (userType == "Base User")
                         {
                             <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="nav-icon far fa fa-home"></i> <p>
+                                        Home Page
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link " asp-area="" asp-controller="VehicleDetection" asp-action="Upload">
                                     <i class="nav-icon fas fa-diagnoses"></i>
                                     <p>
@@ -310,28 +318,37 @@
                         @if (userType == "Autharized Users")
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Admins" asp-action="Index">
-                                    <i class="nav-icon  fa fa-users"></i> <p>
-                                        Add Users
-                                        <span class="badge badge-info right">2</span>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="nav-icon far fa fa-home"></i> <p>
+                                        Home Page
                                     </p>
                                 </a>
                             </li>
-
-
                             <li class="nav-item">
                                 <a class="nav-link " asp-area="" asp-controller="VehicleOwners" asp-action="Index">
                                     <i class="nav-icon fas fa-list"></i>
                                     <p>
-                                        Vehicle Owners 
+                                        Vehicle Owners
                                     </p>
                                 </a>
                             </li>
+
+
+                          
                             <li class="nav-item">
                                 <a class="nav-link " asp-area="" asp-controller="Vehicles" asp-action="Index">
                                     <i class="nav-icon fas fa-car"></i>
                                     <p>
                                         Vehicles
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="VehicleNotes" asp-action="Index">
+                                    <i class="nav-icon fas fa-file"></i>
+                                    <p>
+                                        Vehicle Notes
                                     </p>
                                 </a>
                             </li>
@@ -432,7 +449,7 @@
 
    
     @await RenderSectionAsync("Scripts", required: false)
-
+    <!--Table print pdf search view-->
     <script>
         $(function () {
           $("#example1").DataTable({
@@ -478,9 +495,6 @@
             }
         });
     </script>
-
-
-
 
     
 </body>

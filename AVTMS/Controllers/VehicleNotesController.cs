@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AVTMS.Data;
 using AVTMS.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AVTMS.Controllers
 {
@@ -20,6 +21,7 @@ namespace AVTMS.Controllers
         }
 
         // GET: VehicleNotes
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var appDbContext = _context.VehicleNotes.Include(v => v.Vehicle);

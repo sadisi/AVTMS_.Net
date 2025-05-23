@@ -249,10 +249,7 @@ namespace AVTMS.Controllers
 
             return RedirectToAction("RegisteredUsers");
         }
-        /// <summary>
-        /// /////////////////////////////////////////////////////////
-        /// </summary>
-        /// <returns></returns>
+        
 
         //change password in registered users
 
@@ -296,10 +293,7 @@ namespace AVTMS.Controllers
             return View(new ChangePasswordViewModel { Email = username });
         }
 
-        // <summary>
-        /// 
-        /// </summary>
-        /* */
+        
         [HttpPost]
 
         public async Task<IActionResult> RegisteredUserPasswordChange(ChangePasswordViewModel model)

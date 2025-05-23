@@ -1,43 +1,66 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Users> signInManager;
+@inject UserManager<Users> userManager;
+@inject UserManager<AVTMS.Models.Users> UserManager
+
+
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var userType = currentUser?.UserType;
+}
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <!-- Small boxes (Stat box) -->
+
+
 <div class="row pt-4">
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-info">
-            <div class="inner">
-                <h3>@(ViewBag.VehicleCount ?? 0)</h3>
+        @if (userType == "Admin") // only show to the admin
+        {
 
-                <p>Registered Vehicle</p>
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>@(ViewBag.VehicleCount ?? 0)</h3>
+
+                    <p>Registered Vehicle</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-model-s"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <div class="icon">
-                <i class="ion ion-model-s"></i>
+        }
+    </div>
+
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        @if (userType == "Admin") // only show to the admin
+        {
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>@(ViewBag.VehicleOwnersCount ?? 0)</h3>
+
+                    <p>Registerd Vehicle Owners</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
+        }
     </div>
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-success">
-            <div class="inner">
-                <h3>@(ViewBag.VehicleOwnersCount ?? 0)</h3>
-
-                <p>Registerd Vehicle Owners</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-warning">
-            <div class="inner">
+        @if (userType == "Admin") // only show to the admin
+        {
+            <div class="small-box bg-warning">
+                <div class="inner">
                 <h3>@(ViewBag.systemRegisteredUsersCount ?? 0)</h3>
 
                 <p>Registered System Users</p>
@@ -47,10 +70,12 @@
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
+        }
     </div>
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
+         
         <div class="small-box bg-danger">
             <div class="inner">
                 <h3>@(ViewBag.violationPercentage ?? 0)%</sup></h3>
@@ -131,7 +156,7 @@
                             <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
                         </div>
                         <!-- /.direct-chat-infos -->
-                        <img class="direct-chat-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="message user image">
+                        <img class="direct-chat-img" src="~/AdminLTE/dist/img/Profilepic128.png" alt="message user image">
                         <!-- /.direct-chat-img -->
                         <div class="direct-chat-text">
                            I need full report of vehicle registration
@@ -161,7 +186,7 @@
                             <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
                         </div>
                         <!-- /.direct-chat-infos -->
-                        <img class="direct-chat-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="message user image">
+                        <img class="direct-chat-img" src="~/AdminLTE/dist/img/Profilepic128.png" alt="message user image">
                         <!-- /.direct-chat-img -->
                         <div class="direct-chat-text">
                             ok
@@ -192,7 +217,7 @@
                     <ul class="contacts-list">
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.png" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
@@ -207,7 +232,7 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.png" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
@@ -222,7 +247,7 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.png" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
@@ -237,7 +262,7 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.png" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
@@ -252,7 +277,7 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.png" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
@@ -267,7 +292,7 @@
                         <!-- End Contact Item -->
                         <li>
                             <a href="#">
-                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.jpg" alt="User Avatar">
+                                <img class="contacts-list-img" src="~/AdminLTE/dist/img/Profilepic128.png" alt="User Avatar">
 
                                 <div class="contacts-list-info">
                                     <span class="contacts-list-name">
@@ -519,7 +544,7 @@
             </div>
             <!--
 
-            <!-- /.card-body -->
+            card-body -->
             <div class="card-footer bg-transparent">
                 <div class="row">
                     <div class="col-4 text-center">
@@ -636,7 +661,7 @@
 </div>
 <!-- /.row (main row) -->
 
-
+ <!--Select all land path-->
 <script>
     // Select all land paths
     const lands = document.querySelectorAll('.land');

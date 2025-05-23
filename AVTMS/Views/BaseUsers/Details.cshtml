@@ -1,84 +1,71 @@
 ﻿@model AVTMS.Models.BaseUser
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "User Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>BaseUser</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EmployeeId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EmployeeId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NIC)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NIC)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MiddleName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MiddleName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RegisteredDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RegisteredDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserBranch)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserBranch)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container mt-4">
+    <div class="card shadow rounded-4">
+        <div class="card-header bg-primary text-white rounded-top-4">
+            <h3 class="mb-0">User Details</h3>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-bordered table-striped mb-0">
+                <tbody>
+                    <tr>
+                        <th class="w-25">Employee ID</th>
+                        <td>@Html.DisplayFor(model => model.EmployeeId)</td>
+                    </tr>
+                    <tr>
+                        <th>NIC</th>
+                        <td>@Html.DisplayFor(model => model.NIC)</td>
+                    </tr>
+                    <tr>
+                        <th>First Name</th>
+                        <td>@Html.DisplayFor(model => model.FirstName)</td>
+                    </tr>
+                    <tr>
+                        <th>Middle Name</th>
+                        <td>@Html.DisplayFor(model => model.MiddleName)</td>
+                    </tr>
+                    <tr>
+                        <th>Last Name</th>
+                        <td>@Html.DisplayFor(model => model.LastName)</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>@Html.DisplayFor(model => model.Email)</td>
+                    </tr>
+                    <tr>
+                        <th>Password</th>
+                        <td>@Html.DisplayFor(model => model.Password)</td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number</th>
+                        <td>@Html.DisplayFor(model => model.PhoneNumber)</td>
+                    </tr>
+                    <tr>
+                        <th>Registered Date</th>
+                        <td>@Html.DisplayFor(model => model.RegisteredDate)</td>
+                    </tr>
+                    <tr>
+                        <th>User Type</th>
+                        <td>@Html.DisplayFor(model => model.UserType)</td>
+                    </tr>
+                    <tr>
+                        <th>User Branch</th>
+                        <td>@Html.DisplayFor(model => model.UserBranch)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-end bg-light rounded-bottom-4">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-primary me-2">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
 </div>

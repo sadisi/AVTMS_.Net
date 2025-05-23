@@ -40,6 +40,15 @@ namespace AVTMS.Controllers
             var violationCount = _context.ViolationEmails.Count();
             ViewBag.ViolationCount = violationCount;
 
+            //get total users  counts
+            var  BaseuserCount = _context.BaseUser.Count();
+            var AdminCount = _context.Admins.Count();
+            var AuthuserCount = _context.AuthUsers.Count();
+           
+
+            var TotalUserCount = BaseuserCount + AdminCount + AuthuserCount;
+            ViewBag.TotalUserCount = TotalUserCount;
+
 
             //viloation presentage
             double violationPercentage = 0;
@@ -54,30 +63,7 @@ namespace AVTMS.Controllers
 
 
 
-            //chart data
-
-
-            var vehicleData = _context.Vehicles
-        .GroupBy(v => v.CreatedOn.Month)
-        .Select(g => new
-        {
-            Month = g.Key,
-            Count = g.Count()
-        })
-        .OrderBy(g => g.Month)
-        .ToList();
-
-            var labels = vehicleData.Select(v => CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(v.Month)).ToList();
-            var counts = vehicleData.Select(v => v.Count).ToList();
-
-            ViewBag.VehicleRegLabels = JsonConvert.SerializeObject(labels);
-            ViewBag.VehicleRegCounts = JsonConvert.SerializeObject(counts);
-
-            // Step 5: Return the view with the data available in ViewBag
-
-
-
-            //
+        
 
             return View();
         }
@@ -142,6 +128,8 @@ namespace AVTMS.Controllers
         
     };
 
+
+        //search page
         [HttpGet]
         public IActionResult SearchPages(string query)
         {
@@ -162,6 +150,5 @@ namespace AVTMS.Controllers
 
 
 
-        //Chart
     }
 }

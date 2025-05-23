@@ -191,7 +191,7 @@
             var successMessage = '@TempData["SuccessMessage"]';
             if (successMessage) {
                 $(document).Toasts('create', {
-                    class: 'bg-success',
+                    class: 'bg-success mr-2',
                     title: 'Success',
                     autohide: true,
                     delay: 3000,
@@ -200,5 +200,23 @@
             }
         });
     </script>
+
+
+    <!--deatils not found  notification-->
+    <script>
+        $(document).ready(function () {
+            var successMessage = '@TempData["VDTE"]';
+            if (successMessage) {
+                $(document).Toasts('create', {
+                    class: 'bg-warning mr-2',
+                    title: '🚨 Warning',
+                    autohide: true,
+                    delay: 3000,
+                    body: successMessage
+                });
+            }
+        });
+    </script>
+
 }
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AVTMS.Data;
 using AVTMS.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AVTMS.Controllers
 {
@@ -20,6 +21,7 @@ namespace AVTMS.Controllers
         }
 
         // GET: VehicleOwners
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.VehicleOwner.ToListAsync());
@@ -53,8 +55,7 @@ namespace AVTMS.Controllers
         }
 
         // POST: VehicleOwners/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( VehicleOwner vehicleOwner)
@@ -97,8 +98,7 @@ namespace AVTMS.Controllers
         }
 
         // POST: VehicleOwners/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id,  VehicleOwner vehicleOwner)

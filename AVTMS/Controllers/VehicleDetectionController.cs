@@ -3,6 +3,7 @@ using AVTMS.Data;
 using AVTMS.Models;
 using AVTMS.Services;
 using AVTMS.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -35,7 +36,7 @@ namespace AVTMS.Controllers
 
         }
 
-
+       
         [HttpPost]
         public async Task<IActionResult> UploadVideo(IFormFile videoFile)
         {
@@ -89,10 +90,10 @@ namespace AVTMS.Controllers
                     TempData["Error"] = "There was a problem processing your video. Please check the server logs.";
                 }
 
-                //new
+                //display last 10 detected vehicles
                 var detectedVehicles = _context.VehicleDetects
                 .OrderByDescending(v => v.DetectId)
-                .Take(10) // Optional: just show latest 10
+                .Take(10) // Optional: just show latest 8
                 .ToList();
 
                 return View("Upload", detectedVehicles);
@@ -234,7 +235,7 @@ namespace AVTMS.Controllers
 
 
 
-        //
+        //one by one details get (dev)
 
         [HttpGet]
         public async Task<IActionResult> _VehicleMatchDetailsPartialByPlate(string plate)
@@ -289,7 +290,11 @@ namespace AVTMS.Controllers
 
             // Return 404 if vehicle or its owner is not found
             if (vehicle == null || vehicle.VehicleOwner == null)
+            {
+                TempData["VDTE"] = "That vehicle data does not exist in the database";
                 return NotFound("Vehicle or owner not found.");
+               
+            }
 
             var owner = vehicle.VehicleOwner;
 

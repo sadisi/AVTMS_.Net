@@ -10,6 +10,7 @@ using AVTMS.Models;
 using AVTMS.Services;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AVTMS.Controllers
 {
@@ -25,13 +26,15 @@ namespace AVTMS.Controllers
             _emailService = emailService; //
             _hostEnvironment = hostEnvironment;
         }
-
+        [Authorize]
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
       
             var appDbContext = _context.Vehicles.Include(v => v.VehicleOwner);
             return View(await appDbContext.ToListAsync());
+
+
         }
 
         // GET: Vehicles/Details/5
@@ -220,6 +223,8 @@ namespace AVTMS.Controllers
                     }
 
                     Console.WriteLine("Vehicle saved and email sent successfully");
+
+                    // Success message
                     TempData["SuccessMessage"] = "The vehicle has been successfully added to the system.";
                     return RedirectToAction(nameof(Index));
                 }
@@ -241,6 +246,8 @@ namespace AVTMS.Controllers
                     }
                 }
             }
+
+           
 
             ViewData["VehicleOwnerNIC"] = new SelectList(_context.Set<VehicleOwner>(), "NIC", "NIC", vehicle.VehicleOwnerNIC);
             return View(vehicle);

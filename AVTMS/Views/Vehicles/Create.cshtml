@@ -130,4 +130,28 @@
         });
     </script>
 
+
+    <!--Successfully email send notification-->
+    <script>
+        $(document).ready(function () {
+            var successMessage = '@TempData["SuccessMessage"]';
+            if (successMessage) {
+                $(document).Toasts('create', {
+                    class: 'bg-success',
+                    title: 'Success',
+                    autohide: true,
+                    delay: 3000,
+                    body: successMessage
+                });
+            }
+        });
+    </script>
+
+    
+
 }
+
+
+   
+
+

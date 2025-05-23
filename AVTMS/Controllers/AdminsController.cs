@@ -175,8 +175,8 @@ namespace AVTMS.Controllers
 
 
 
-        //////////Aditional register button//////////////////
-        ///
+        /////Aditional register button/////
+        
 
         public async Task<IActionResult> Register(int id)
         {

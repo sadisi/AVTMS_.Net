@@ -1,50 +1,96 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
-@{
     ViewData["Title"] = "Terms & Conditions";
 }
 
-<div class="max-w-4xl mx-auto mt-10 p-8 bg-white shadow-xl rounded-2xl border border-gray-200">
-    <h1 class="text-3xl font-bold text-blue-800 mb-6 border-b pb-2">📄 Terms and Conditions</h1>
+<div class="container my-5 mb-4">
+    <div class="card shadow-lg border-0 rounded-4 mt-3 mb-4">
+        <div class="card-body p-5 ">
+            <div class="d-flex align-items-center mb-4">
+                <div class="me-3">
+                    <span class="bg-primary text-white p-3 rounded-circle mr-2">
+                        <i class="fas fa-file-contract fa-lg "></i>
+                    </span>
+                </div>
+                <h2 class="card-title mb-0 mr-2 text-bold">Terms & Conditions</h2>
+            </div>
 
-    <p class="mb-4 text-gray-700">
-        By using <strong>AVTMS</strong>, you agree to the following terms. Please read them carefully before accessing or uploading data.
-    </p>
+            <p class="text-muted mb-4 text-center ">
+                By using <strong>AVTMS</strong>, you agree to the following terms. Please review them carefully before using the platform.
+            </p>
 
-    <div class="space-y-5">
-        <section>
-            <h2 class="text-xl font-semibold text-blue-600 mb-2">✅ 1. Authorized Usage</h2>
-            <ul class="list-disc pl-5 text-gray-700">
-                <li>Only authorized staff and enforcement officers may use this platform.</li>
-                <li>Actions within the system are monitored and logged.</li>
-            </ul>
-        </section>
+            <div class="card mb-3 border-0 shadow-md rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="fas fa-user-shield me-2 mr-2"></i> 1. Authorized Usage
+                    </h5>
+                    <ul class="mb-0 text-muted mr-4">
+                        <br />
+                        <li class="mr-5">Only authorized staff and law enforcement may use the system.</li>
+                        <li>System actions are monitored and logged for accountability.</li>
+                    </ul>
+                </div>
+            </div>
 
-        <section>
-            <h2 class="text-xl font-semibold text-blue-600 mb-2">🔒 2. Security Obligations</h2>
-            <ul class="list-disc pl-5 text-gray-700">
-                <li>You must not share your credentials.</li>
-                <li>Any attempt to tamper, reverse-engineer, or disrupt service is prohibited.</li>
-            </ul>
-        </section>
+            <div class="card mb-3 border-0 shadow-md rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="fas fa-lock me-2 mr-2"></i> 2. Security Obligations
+                    </h5>
+                    <br />
+                    <ul class="mb-0 text-muted mr-2">
+                        <li>Do not share your login credentials with anyone.</li>
+                        <li>Any attempt to hack, reverse-engineer, or disrupt services is strictly prohibited.</li>
+                    </ul>
+                </div>
+            </div>
 
-        <section>
-            <h2 class="text-xl font-semibold text-blue-600 mb-2">⚠️ 3. Data Responsibility</h2>
-            <p class="text-gray-700">You are responsible for the accuracy of any uploaded footage. Misuse may lead to account termination.</p>
-        </section>
+            <div class="card mb-3 border-0 shadow-md rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="fas fa-database me-2 mr-2"></i> 3. Data Responsibility
+                    </h5>
+                    <br />
+                    <ul class="mb-0 text-muted mr-2">
+                        <li>
+                            <p class="text-muted mb-0 " ">
+                                You are responsible for the accuracy of any uploaded footage. Misuse can result in account suspension.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-        <section>
-            <h2 class="text-xl font-semibold text-blue-600 mb-2">💼 4. System Ownership</h2>
-            <p class="text-gray-700">AVTMS, its source code, and all data belong to the project stakeholders and must not be copied without permission.</p>
-        </section>
+            <div class="card mb-3 border-0 shadow-md rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="fas fa-copyright me-2 mr-2"></i> 4. System Ownership
+                    </h5>
+                    <br>
+                    <ul class="mb-0 text-muted mr-2">
+                        <li>
+                            <p class="text-muted mb-0 mr-2">AVTMS and its source code are the property of the R.P.D.S.Vilochana Rajapaksha (Developer)/(Stack Holder). Copying or redistribution is prohibited.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-        <section>
-            <h2 class="text-xl font-semibold text-blue-600 mb-2">📅 5. Updates</h2>
-            <p class="text-gray-700">Terms may be modified. Continued use implies acceptance of the latest version.</p>
-        </section>
+            <div class="card mb-3 border-0 shadow-md rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="fas fa-sync-alt me-2 mr-2"></i> 5. Updates
+                    </h5>
+                    <br>
+                    <ul class="mb-0 text-muted mr-2">
+                        <li>
+                            <p class="text-muted mb-0 mr-2">These terms may change. Continued use means you agree to the most recent version.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="text-end text-muted mt-4 mb-0 mr-2">
+                <small><i class="fas fa-clock me-1 mr-2"></i>Last updated: @DateTime.Now.ToString("MMMM dd, yyyy")</small>
+            </p>
+        </div>
     </div>
-
-    <p class="mt-8 text-sm text-gray-500">Last revised: @DateTime.Now.ToString("MMMM dd, yyyy")</p>
 </div>
