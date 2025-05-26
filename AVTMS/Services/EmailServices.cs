@@ -10,7 +10,7 @@ namespace AVTMS.Services
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("svr.services5555@gmail.com", "hrmb yqef wrsj eedx"),
+                Credentials = new NetworkCredential("svr.services5555@gmail.com", "hedx svr tysg hgeji"),
                 EnableSsl = true,
             };
 
